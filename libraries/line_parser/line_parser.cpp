@@ -14,7 +14,7 @@
     static char field_offsets[MAX_FIELDS];
 
 /**
- * @brief This function serves as a parser strings.
+ * @brief This function serves to quickly parse a string and return the desired field.
  *
  * \b Example:
  *    @code
@@ -26,10 +26,10 @@
  *              printf("\tfield %d with length %d = %s\n",i, num_char_in_field, line );
  *          }
  *    @endcode
- * 
- * return
- * 
- *      The string "$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47" contains 15 fields.  The individual fields are: 
+ *
+ * This script will output:
+ *
+ *      The string "$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47" contains 15 fields.  The individual fields are:
  *          field 0 with length 6 = $GPGGA
  *          field 1 with length 6 = 123519
  *          field 2 with length 8 = 4807.038
@@ -48,14 +48,13 @@
  *
  * @warning Do not insert spaces after the comma.
  *
- * @Note This function could have been designed using an array of pointers to
- *       hold the location of each field.  This would have made the results
- *       easier to use.  This was not done to keep the array as small as
- *       possible - an important decision for use with smaller computers such
+ * @Note This function could have been designed using an array of pointers to hold the location of
+ *       each field.  This would have made the results easier to use.  This was not done to keep the
+ *       array as small as possible - an important decision for use with smaller computers such
  *       as Arduino.
  *
  * @param *line a pointer to the input string
- * 
+ *
  * @param *line_field_offsets a pointer to an array that will be used to hold the
  *        starting indices of each field in the array
  *
@@ -74,7 +73,7 @@
  *          printf("\tfield %d with length %d = %s\n",i, num_char_in_field, line );
  *          }
  *    @endcode
- * 
+ *
  */
 
 uint8_t line_parser(char *line, char delim){
@@ -95,7 +94,7 @@ uint8_t line_parser(char *line, char delim){
             field_offsets[field_ctr] = i + 1;       // You are at the delimiter, field start on i
             field_ctr++;
         }
-        else{                               //FIXME get rid of braces
+        else{
             line_buf[i] = *line;
         }
         line++;
@@ -118,7 +117,7 @@ uint8_t get_field(uint8_t N, char *field){
 
     while(i < BUF_LEN - 1){                         // Save space for null termination
         *field = line_buf[i];
-        if (line_buf[i] == 0x00){               //FIXME get rid of braces
+        if (line_buf[i] == 0x00){
             break;
         }
         cnt++;
