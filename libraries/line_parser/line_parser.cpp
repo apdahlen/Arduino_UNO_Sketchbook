@@ -112,7 +112,7 @@ uint8_t line_parser(char *line, char delim){
 
 uint8_t get_field(uint8_t N, char *field){
 
-    uint8_t i = field_offsets[N];
+    uint8_t i = field_offsets[N - 1];                 // simplify use by starting at field 1 instead of field 0
     uint8_t cnt = 0;
 
     while(i < BUF_LEN - 1){                         // Save space for null termination
