@@ -21,7 +21,7 @@
  *          sprintf(line, "%s", "$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47");
  *          num_fields =  line_parser(line, ',');
  *          printf("\nThe string \"%s\" contains %d fields.  The individual fields are: \n", line, num_fields);
- *          for (i = 0; i < num_fields; i++){
+ *          for (i = 1; i < num_fields; i++){
  *              num_char_in_field = get_field(i, line);
  *              printf("\tfield %d with length %d = %s\n",i, num_char_in_field, line );
  *          }
@@ -30,23 +30,21 @@
  * This script will output:
  *
  *      The string "$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47" contains 15 fields.  The individual fields are:
- *          field 0 with length 6 = $GPGGA
- *          field 1 with length 6 = 123519
- *          field 2 with length 8 = 4807.038
- *          field 3 with length 1 = N
- *          field 4 with length 9 = 01131.000
- *          field 5 with length 1 = E
- *          field 6 with length 1 = 1
- *          field 7 with length 2 = 08
- *          field 8 with length 3 = 0.9
- *          field 9 with length 5 = 545.4
- *          field 10 with length 1 = M
- *          field 11 with length 4 = 46.9
- *          field 12 with length 1 = M
- *          field 13 with length 0 =
- *          field 14 with length 3 = *47
- *
- * @warning Do not insert spaces after the comma.
+ *          field 1 with length 6 = $GPGGA
+ *          field 2 with length 6 = 123519
+ *          field 3 with length 8 = 4807.038
+ *          field 4 with length 1 = N
+ *          field 5 with length 9 = 01131.000
+ *          field 6 with length 1 = E
+ *          field 7 with length 1 = 1
+ *          field 8 with length 2 = 08
+ *          field 9 with length 3 = 0.9
+ *          field 10 with length 5 = 545.4
+ *          field 11 with length 1 = M
+ *          field 12 with length 4 = 46.9
+ *          field 13 with length 1 = M
+ *          field 14 with length 0 =
+ *          field 15 with length 3 = *47
  *
  * @Note This function could have been designed using an array of pointers to hold the location of
  *       each field.  This would have made the results easier to use.  This was not done to keep the
@@ -54,9 +52,6 @@
  *       as Arduino.
  *
  * @param *line a pointer to the input string
- *
- * @param *line_field_offsets a pointer to an array that will be used to hold the
- *        starting indices of each field in the array
  *
  * @return int containing the number of fields in the string
  *
