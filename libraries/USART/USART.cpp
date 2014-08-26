@@ -7,7 +7,7 @@
 
 /* Set the size of the circular buffer */
 
-    #define circ_buf_len 128                // must be a power of 2
+    #define circ_buf_len 128                // must be a power of 2 (PO2)
     #define modulo_mask 0b01111111          // must be the binary representation of circ_buf_len - 1
 
 
@@ -66,9 +66,9 @@ void USART_handle_ISR(void){
  *      UBBR = --------------  - 1
  *               16 * BAUD
  *
- * @param f_clk - master clock frequency usually 16000000 for the Arduino
+ * @param f_clk - master clock frequency,  usually 16000000 for the Arduino
  *
- * @param baud_rate #define baud_rate 19200L
+ * @param baud_rate desired speed of the USART e.g., 19200L
  *
 
  *
@@ -133,9 +133,9 @@ uint8_t USART_is_string(void){
         /* The next line of code requires a bit of explanation.  Recall that the next char
          * into the circular buffer is inserted at the location pointed to by HEAD.  As we
          * "peek" into the circular buffer we start at TAIL and work our way to HEAD.
-         * However, we don't want to look at HEAD itself.  We want one less than HEAD.  An
-         * easy way to perform this calculation is to take advantage of modulo math.  Simply
-         * add 31 to the HEAD and mask off the overflow bit.
+         * However, we don't want to look at HEAD itself.  We want one less than HEAD.
+         * An easy way to perform this calculation is to take advantage of modulo math.
+         * Add one less than the size of the buffer and mask of the "overflow bit."
          */
 
         while (i != ((circ_buf_head + (circ_buf_len - 1)) & modulo_mask )){

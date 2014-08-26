@@ -54,33 +54,23 @@ void SPI_init(void){
 
 /** SPI_transfer
  *
- * @brief Initialize the AVR SPI peripheral.  This code is taken directly from the ATMega328p
- * data sheet.
+ * @brief Transfer date to and from the SPI device
  *
- * @param N number opf bytes to be transfered
+ * @param N number of bytes to be transfered
  *
  * @param *SPI_tx_buf address of the buffer holding the data to be transmitted
  *
- * @param *SPI_rx_buf address of teh buffer that will hold the incomming data.
+ * @param *SPI_rx_buf address of the buffer that will hold the incoming data
  *
  * @return none
  *
- * @note pin assignments.  On an Arduino UNO:
- *
- *      pin:    function:
- *
- *      10      CS_not          // In master mode this is not part of the SPI.  This particular
- *                              // pin was selected for its close proximity to the other SPI pins.
- *      11      MOSI
- *      12      MISO
- *      13      SCK
  */
 void SPI_transfer(uint8_t N, uint8_t *SPI_tx_buf, uint8_t *SPI_rx_buf){
 
     int i;
-    CS_assert;                                  // see macro above
+    CS_assert;
 
-    SPI_rx_buf += N - 1;                        // FIXME this has not been tested...
+    SPI_rx_buf += N - 1;
 
     for (i = 0; i < N; i++){
         SPI_data_reg = *SPI_tx_buf;
