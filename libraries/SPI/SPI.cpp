@@ -2,9 +2,7 @@
 
 // AVR Libc includes
     #include <avr/io.h>
-
     #include <stdint.h>
-
     #include "SPI.h"
 
     #define DDR_SPI   DDRB
@@ -13,10 +11,10 @@
     #define DD_CS_not DDB2
     #define DD_SCK    DDB5
     #define DD_MOSI   DDB3
-    #define DD_MISO   DDB4
+//  #define DD_MISO   DDB4
 
-    #define  READ_CMD   0x03
-    #define  WRITE_CMD  0x02
+//  #define  READ_CMD   0x03
+//  #define  WRITE_CMD  0x02
 
     #define SPI_data_reg    SPDR
     #define Wait_for_XMT    while(!(SPSR & (1<<SPIF)))
@@ -47,7 +45,7 @@ void SPI_init(void){
         DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_CS_not);
         CS_idle;
     /* Enable SPI, Master, set clock rate fck/64 */
-        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1); //(1 << SPR0);  
+        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1); //(1 << SPR0);
 }
 
 
