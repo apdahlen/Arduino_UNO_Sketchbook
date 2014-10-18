@@ -23,7 +23,7 @@
     #define CS_assert       SPI_port &= ~(1 << DD_CS_not)
     #define CS_idle         SPI_port |= (1 << DD_CS_not)
 
-/** SPI_slave_Init
+/** SPI_slave_init
  *
  * @brief Initialize the AVR SPI peripheral as slave.
  *
