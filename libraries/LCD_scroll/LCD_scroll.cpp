@@ -1,4 +1,10 @@
 
+    #include <avr/io.h>
+
+    #include <stdint.h>
+
+    #include "LCD_scroll.h"
+
 /**
 * @brief This function allows you to send long ROM based text strings to the LCD display. It
 * automatically performs the scrolling operation.

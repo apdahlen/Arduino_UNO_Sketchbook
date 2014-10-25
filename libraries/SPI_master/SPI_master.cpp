@@ -10,10 +10,10 @@
     #define DDR_SPI   DDRB
     #define SPI_port PORTB
 
-    #define DD_CS_not DDB2
-    #define DD_SCK    DDB5
-    #define DD_MOSI   DDB3
-//    #define DD_MISO   DDB4
+    #define DD_CS_not DDB2      // Arduino uno pin 10
+    #define DD_SCK    DDB5      //  ''     ''  pin 13
+    #define DD_MOSI   DDB3      //  ''     ''  pin 11
+    #define DD_MISO   DDB4      //  ''     ''  pin 12
 
     #define  READ_CMD   0x03
     #define  WRITE_CMD  0x02
