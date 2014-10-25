@@ -66,6 +66,7 @@ uint8_t SPI_slave_get(void){
     return SPDR;
 }
 
+
 void SPI_slave_put(uint8_t c){
     SPDR = c;
 }

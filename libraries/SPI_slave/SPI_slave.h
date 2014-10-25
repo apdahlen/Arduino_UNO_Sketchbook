@@ -4,8 +4,8 @@
 
     #include <stdint.h>
 
-   void SPI_slave_init(void);
-   uint8_t SPI_slave_get(void);
-   void SPI_slave_put(uint8_t);
+    void SPI_slave_init(void);
+    uint8_t SPI_slave_get(void);
+    void SPI_slave_put(uint8_t);
 
 #endif
