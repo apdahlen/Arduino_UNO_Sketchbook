@@ -48,18 +48,8 @@ void SPI_slave_init(void){
 }
 
 
-/*
-void SPI_slave_ISR_handle(void){
-
-    char c = SPDR;  // grab byte from SPI Data Register
-
-   }
-
-*/
-
-
-
 uint8_t SPI_slave_get(void){
+
     /* Wait for reception complete */
     while(!(SPSR & (1 << SPIF)));
     /* Return Data Register */
@@ -68,7 +58,29 @@ uint8_t SPI_slave_get(void){
 
 
 void SPI_slave_put(uint8_t c){
+
+    uint8_t dummy;
+
+    SPDR = 0x10;//c;
+
+    /* Wait for reception complete */
+    while(!(SPSR & (1 << SPIF)));
+
+    //SPSR = SPSR & !(1 << SPIF);   try to slear IF flag
+    dummy = SPDR;
+
+
+  //  while(!(SPSR & (1 << SPIF)));
+}
+
+
+uint8_t SPI_slave_xfr(uint8_t c){
+
     SPDR = c;
+    /* Wait for reception complete */
+    while(!(SPSR & (1 << SPIF)));
+    /* Return Data Register */
+    return SPDR;
 }
 
 /*
@@ -86,5 +98,16 @@ ISR (SPI_STC_vect)
 
     }  // end of room available
 }  // end of interrupt routine SPI_STC_vect
+
+*/
+
+
+
+/*
+void SPI_slave_ISR_handle(void){
+
+    char c = SPDR;  // grab byte from SPI Data Register
+
+   }
 
 */

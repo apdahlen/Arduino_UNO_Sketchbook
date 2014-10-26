@@ -46,8 +46,8 @@ void SPI_master_init(void){
     /* Set MOSI and SCK output, all others input */
         DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_CS_not);
         CS_idle;
-    /* Enable SPI, Master, set clock rate fck/64 */
-        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1); //(1 << SPR0);
+    /* Enable SPI, Master, set clock rate fck/128 */
+        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
 }
 
 
@@ -79,6 +79,6 @@ void SPI_master_xfr(uint8_t N, uint8_t *SPI_tx_buf, uint8_t *SPI_rx_buf){
         SPI_tx_buf ++;
         SPI_rx_buf --;
     }
-     CS_idle;
+    CS_idle;
 }
 
