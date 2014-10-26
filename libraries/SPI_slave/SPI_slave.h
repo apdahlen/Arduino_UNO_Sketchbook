@@ -6,7 +6,7 @@
 
     void SPI_slave_init(void);
     uint8_t SPI_slave_get(void);
-    void SPI_slave_put(uint8_t);
-    uint8_t SPI_slave_xfr(uint8_t c);
+    void SPI_slave_put_8(uint8_t);
+    void SPI_slave_put_16(uint16_t);
 
 #endif

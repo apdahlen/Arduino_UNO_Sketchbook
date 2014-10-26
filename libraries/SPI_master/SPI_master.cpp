@@ -70,14 +70,12 @@ void SPI_master_xfr(uint8_t N, uint8_t *SPI_tx_buf, uint8_t *SPI_rx_buf){
     int i;
     CS_assert;
 
-    SPI_rx_buf += N - 1;
-
     for (i = 0; i < N; i++){
         SPI_data_reg = *SPI_tx_buf;
         Wait_for_XMT;
         *SPI_rx_buf = SPI_data_reg;
         SPI_tx_buf ++;
-        SPI_rx_buf --;
+        SPI_rx_buf ++;
     }
     CS_idle;
 }
