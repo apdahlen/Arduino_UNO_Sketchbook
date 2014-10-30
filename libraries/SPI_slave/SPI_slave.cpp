@@ -48,7 +48,7 @@ void SPI_slave_init(void){
 }
 
 
-uint8_t SPI_slave_get(void){
+uint8_t SPI_slave_get_char(void){
 
     /* Wait for reception complete */
     while(!(SPSR & (1 << SPIF)));
