@@ -46,13 +46,8 @@ void SPI_master_init(void){
     /* Set MOSI and SCK output, all others input */
         DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_CS_not);
         CS_idle;
-<<<<<<< HEAD:libraries/SPI_master/SPI_master.cpp
-    /* Enable SPI, Master, set clock rate fck/64 */
-        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1); //(1 << SPR0);
-=======
     /* Enable SPI, Master, set clock rate fck/128 */
         SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
->>>>>>> 8fa767c1fa4961df3742e209f44039916ba4dd8b:libraries/SPI_master/SPI_master.cpp
 }
 
 

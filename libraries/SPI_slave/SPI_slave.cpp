@@ -23,7 +23,6 @@
     #define CS_assert       SPI_port &= ~(1 << DD_CS_not)
     #define CS_idle         SPI_port |= (1 << DD_CS_not)
 
-
 /** SPI_slave_init
  *
  * @brief Initialize the AVR SPI peripheral as slave.
@@ -48,43 +47,6 @@ void SPI_slave_init(void){
         SPCR = (1<<SPE);
 }
 
-
-/*
-void SPI_slave_ISR_handle(void){
-
-    char c = SPDR;  // grab byte from SPI Data Register
-
-   }
-
-*/
-
-
-
-char SPI_slave_get_char(void){
-    /* Wait for reception complete */
-    while(!(SPSR & (1 << SPIF)));
-    /* Return Data Register */
-    return SPDR;
-}
-
-
-/*
-ISR (SPI_STC_vect)
-{
-
-  // add to buffer if room
-  if (pos < sizeof buf)
-    {
-    buf [pos++] = c;
-
-    // example: newline means time to process buffer
-    if (c == '\n')
-      process_it = true;
-
-    }  // end of room available
-}  // end of interrupt routine SPI_STC_vect
-
-*/
 
 uint8_t SPI_slave_get(void){
 

@@ -9,5 +9,4 @@
     void SPI_slave_put_8(uint8_t);
     void SPI_slave_put_16(uint16_t);
 
-
 #endif
