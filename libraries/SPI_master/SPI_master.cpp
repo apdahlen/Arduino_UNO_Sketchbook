@@ -10,10 +10,10 @@
     #define DDR_SPI   DDRB
     #define SPI_port PORTB
 
-    #define DD_CS_not DDB2
-    #define DD_SCK    DDB5
-    #define DD_MOSI   DDB3
-//    #define DD_MISO   DDB4
+    #define DD_CS_not DDB2      // Arduino uno pin 10
+    #define DD_SCK    DDB5      //  ''     ''  pin 13
+    #define DD_MOSI   DDB3      //  ''     ''  pin 11
+    #define DD_MISO   DDB4      //  ''     ''  pin 12
 
     #define  READ_CMD   0x03
     #define  WRITE_CMD  0x02
@@ -46,8 +46,13 @@ void SPI_master_init(void){
     /* Set MOSI and SCK output, all others input */
         DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_CS_not);
         CS_idle;
+<<<<<<< HEAD:libraries/SPI_master/SPI_master.cpp
     /* Enable SPI, Master, set clock rate fck/64 */
         SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1); //(1 << SPR0);
+=======
+    /* Enable SPI, Master, set clock rate fck/128 */
+        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
+>>>>>>> 8fa767c1fa4961df3742e209f44039916ba4dd8b:libraries/SPI_master/SPI_master.cpp
 }
 
 
@@ -70,15 +75,13 @@ void SPI_master_xfr(uint8_t N, uint8_t *SPI_tx_buf, uint8_t *SPI_rx_buf){
     int i;
     CS_assert;
 
-    SPI_rx_buf += N - 1;
-
     for (i = 0; i < N; i++){
         SPI_data_reg = *SPI_tx_buf;
         Wait_for_XMT;
         *SPI_rx_buf = SPI_data_reg;
         SPI_tx_buf ++;
-        SPI_rx_buf --;
+        SPI_rx_buf ++;
     }
-     CS_idle;
+    CS_idle;
 }
 
