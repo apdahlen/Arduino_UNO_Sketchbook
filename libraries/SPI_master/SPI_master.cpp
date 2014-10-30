@@ -78,5 +78,7 @@ void SPI_master_xfr(uint8_t N, uint8_t *SPI_tx_buf, uint8_t *SPI_rx_buf){
         SPI_rx_buf ++;
     }
     CS_idle;
+
+    for(i = 0; i < 255 ; i++); 
 }
 
