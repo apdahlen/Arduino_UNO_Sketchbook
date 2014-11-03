@@ -1,5 +1,5 @@
 
-    #include "adc.h"
+    #include "AVR_adc.h"
     #include <stdint.h>
     #include <avr/io.h>
 
