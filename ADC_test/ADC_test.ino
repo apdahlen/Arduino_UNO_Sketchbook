@@ -33,7 +33,7 @@
 
     #include "configuration.h"
     #include "USART.h"
-    #include "adc.h"
+    #include "AVR_adc.h"
 
 // Global variables
 

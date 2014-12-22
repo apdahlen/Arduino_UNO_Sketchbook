@@ -1,6 +1,6 @@
-#ifndef _ADC_H
+#ifndef AVR_ADC_H
 
-    #define _ADC_H
+    #define AVR_ADC_H
     #include <stdint.h>
     #include <avr/io.h>
 
