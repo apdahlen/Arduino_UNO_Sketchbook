@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cb:CODEBLOCKS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://education.mit.edu/openblocks/ns http://education.mit.edu/openblocks/codeblocks.xsd" xmlns:cb="http://education.mit.edu/openblocks/ns">
+<Pages collapsible-pages="yes" drawer-with-page="yes">
+<Page page-color="128 128 128" page-drawer="Main" page-infullview="yes" page-name="Main" page-width="1920">
+<PageBlocks>
+<Block genus-name="pin-write-analog" id="76">
+<Location>
+<X>20</X>
+<Y>116</Y>
+</Location>
+<Comment>
+<Text>Red</Text>
+<Location>
+<X>277</X>
+<Y>108</Y>
+</Location>
+<BoxSize>
+<Width>81</Width>
+<Height>37</Height>
+</BoxSize>
+</Comment>
+<Sockets num-sockets="2">
+<BlockConnector con-block-id="77" connector-kind="socket" connector-type="number" init-type="number" label="#" position-type="single"/>
+<BlockConnector con-block-id="78" connector-kind="socket" connector-type="number" init-type="number" label="" position-type="single"/>
+</Sockets>
+</Block>
+<Block genus-name="number" id="78">
+<Label>16</Label>
+<Location>
+<X>168</X>
+<Y>143</Y>
+</Location>
+<Plug>
+<BlockConnector con-block-id="76" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+</Plug>
+</Block>
+<Block genus-name="number" id="77">
+<Label>9</Label>
+<Location>
+<X>168</X>
+<Y>119</Y>
+</Location>
+<Plug>
+<BlockConnector con-block-id="76" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+</Plug>
+</Block>
+<Block genus-name="pin-write-analog" id="82">
+<Location>
+<X>20</X>
+<Y>272</Y>
+</Location>
+<Comment>
+<Text>Blue</Text>
+<Location>
+<X>283</X>
+<Y>274</Y>
+</Location>
+<BoxSize>
+<Width>72</Width>
+<Height>39</Height>
+</BoxSize>
+</Comment>
+<Sockets num-sockets="2">
+<BlockConnector con-block-id="83" connector-kind="socket" connector-type="number" init-type="number" label="#" position-type="single"/>
+<BlockConnector con-block-id="84" connector-kind="socket" connector-type="number" init-type="number" label="" position-type="single"/>
+</Sockets>
+</Block>
+<Block genus-name="number" id="84">
+<Label>64</Label>
+<Location>
+<X>168</X>
+<Y>299</Y>
+</Location>
+<Plug>
+<BlockConnector con-block-id="82" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+</Plug>
+</Block>
+<Block genus-name="number" id="83">
+<Label>11</Label>
+<Location>
+<X>168</X>
+<Y>275</Y>
+</Location>
+<Plug>
+<BlockConnector con-block-id="82" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+</Plug>
+</Block>
+<Block genus-name="pin-write-analog" id="79">
+<Location>
+<X>20</X>
+<Y>194</Y>
+</Location>
+<Comment>
+<Text>Green</Text>
+<Location>
+<X>275</X>
+<Y>194</Y>
+</Location>
+<BoxSize>
+<Width>85</Width>
+<Height>35</Height>
+</BoxSize>
+</Comment>
+<Sockets num-sockets="2">
+<BlockConnector con-block-id="80" connector-kind="socket" connector-type="number" init-type="number" label="#" position-type="single"/>
+<BlockConnector con-block-id="81" connector-kind="socket" connector-type="number" init-type="number" label="" position-type="single"/>
+</Sockets>
+</Block>
+<Block genus-name="number" id="81">
+<Label>128</Label>
+<Location>
+<X>168</X>
+<Y>221</Y>
+</Location>
+<Plug>
+<BlockConnector con-block-id="79" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+</Plug>
+</Block>
+<Block genus-name="number" id="80">
+<Label>10</Label>
+<Location>
+<X>168</X>
+<Y>197</Y>
+</Location>
+<Plug>
+<BlockConnector con-block-id="79" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+</Plug>
+</Block>
+<Block genus-name="program" id="75">
+<Location>
+<X>20</X>
+<Y>20</Y>
+</Location>
+<Sockets num-sockets="2">
+<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="setup" position-type="single"/>
+<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="loop" position-type="single"/>
+</Sockets>
+</Block>
+</PageBlocks>
+</Page>
+</Pages>
+</cb:CODEBLOCKS>

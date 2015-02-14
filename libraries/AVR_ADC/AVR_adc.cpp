@@ -29,8 +29,8 @@
  */
 void ADC_init(){
 
-  //ADMUX |= (1 << REFS0);                              // VCC as voltage reference
-    ADMUX |= (1 << REFS1) | (1 << REFS0);               // Internal 1.1 V as voltage reference
+    ADMUX |= (1 << REFS0);                              // VCC as voltage reference
+ // ADMUX |= (1 << REFS1) | (1 << REFS0);               // Internal 1.1 V as voltage reference
 
     ADCSRA &= 0xF8;                                     // FIXME what about this line make the prescaler work?
 
@@ -64,7 +64,7 @@ uint16_t read_ADC(uint8_t channel){
 
 
 /**
- * @brief Perform sequential reads on 4 ADC channels.
+ * @brief Perform sequential reads on N ADC channels.
  *
  * @param pointer to array to a 4 element uint16_t array to hold ADC results
  *
