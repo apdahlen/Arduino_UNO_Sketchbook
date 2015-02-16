@@ -1,0 +1,50 @@
+
+
+Starting Address to write
+Number of Registers to write to
+
+
+    uint16_t MODBUS_get_node_address(void);
+
+    uint16_t MODBUS_get_msg_cmd(void);
+        // 1) Read Registers (Function Code 3).
+        // 2) Write Multiple Registers (Function Code 16).
+        // 3) Write Single Register (Function Code 6).
+
+    uint16_t MODBUS_get_msg_starting_address(void);
+    uint16_t MODBUS_get_num_data_words(void);
+
+
+        if(MODBUS_is_new_msg() && MODBUS_is_for_me(MY_ADDRESS)){
+
+            switch(MODBUS_type_of_MSG)
+
+            case DO_SOMETHING:
+
+                break;
+
+            case SEND_SOMETHING:
+
+                break;
+
+            case default;
+
+                //FIXME debug output error in 
+        }
+        milisecond_cnt = 0;
+        if(!USART_is_string( )){
+            USART_gets(MODBUS_reply_line);
+
+            //FIXME do something
+
+            }
+            delay(1);
+          //  if (++milisecond_cnt == USART_TIMEOUT_MILISECONDS){                                // prevent lockup if device is not connected
+          //      strncpy(ERROR_MSG, "MODBUS_read_registers: USART timeout", SIZE_ERROR_MSG);
+          //      return 0x00;
+            }
+        }
+
+
+
+
