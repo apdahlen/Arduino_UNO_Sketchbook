@@ -4,6 +4,8 @@
     #include <stdint.h>
 
     void USART_handle_ISR(void);
+
+    void USART_init(unsigned long f_clk, unsigned long baud_rate, uint8_t data_bits, char parity);
     void USART_init(unsigned long f_clk, unsigned long baud_rate);
 
     void USART_set_terminator(char terminator);

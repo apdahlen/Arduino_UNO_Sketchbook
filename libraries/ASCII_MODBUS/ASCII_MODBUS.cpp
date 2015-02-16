@@ -45,8 +45,8 @@
 
 // Public variables defined
 
-    char MODBUS_cmd_line[size_of_cmd_lines] = "MODBUS_cmd_lin not set";
-    char MODBUS_reply_line[size_of_cmd_lines] = "MODBUS_cmd_lin not set";
+    char MODBUS_cmd_line[size_of_cmd_lines];
+    char MODBUS_reply_line[size_of_cmd_lines];
 
 
 // Private functions
@@ -153,20 +153,21 @@
  * @brief This function is used to write a single word to the MODBUS.  An string
  *        is 15 char long plus 2 for terminating characters e.g.,
  *
- *         : 01 06 0100 1770 71 CR LF    (spaces included to separate the fileds)
+ *         : 01 06 0100 1770 71 CR LF   (spaces included to separate the fields)
  *
- * @param physical_addr a byte identifying a particular MODBUS device.  Note this
- *        must be manually programmed into a device such as the GS1.
+ * @param physical_addr a byte identifying a particular MODBUS device.  Note
+ *        this must be manually programmed into a device such as the GS1.
  *
- * @param mem_addr a 16-bit value identifying the particular MODBUS register to be written
+ * @param mem_addr a 16-bit value identifying the particular MODBUS register to
+ *        be written
  *
  * @param data a 16-bit value containing the data to be written to mem_addr
  *
  * @return result of operation, 1 = success, 0 = failure
  *
- * @note  There is a glitch as the RS-485 transceiver transitions from XMT to RCV.
- *        This delay moves the transition outside of the GS1's observation window.
- *        Note that the GS1 takes approximately 2.5 mS to start a reply.
+ * @note  There is a glitch as the RS-485 transceiver transitions from XMT to
+ *        RCV.  This delay moves the transition outside of the GS1's observation
+ *        window.  Note that the GS1 takes approximately 2.5 mS to start reply.
  */
 
     uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data) {
@@ -319,8 +320,6 @@
  ******************************************************************************/
 
 
-
-
     static char MODBUS_str[MODBUS_STR_LENGTH];
     static uint8_t num_char;
 
@@ -402,7 +401,7 @@
   *     16 - write multiple registers
   *      6 - write single register
   *
-  * @return the function code in the MODBUS message
+  * @return the function code contained in the MODBUS message
   */
     uint_t MODBUS_get_function_code(void){
 
@@ -479,7 +478,7 @@
 
 
 
-    uint16_t MOSBUS_get_data_to_write(void){
+    uint16_t MODBUS_get_data_to_write(void){
 
         uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[9]);
         uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[10]);
