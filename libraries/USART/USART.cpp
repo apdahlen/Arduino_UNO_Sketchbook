@@ -76,7 +76,7 @@ void USART_handle_ISR(void){
  *
  * @return void
  */
-void USART_init(unsigned long f_clk, unsigned long baud_rate, uint8_t data_bits, char parity){
+void USART_init_full(unsigned long f_clk, unsigned long baud_rate, uint8_t data_bits, char parity){
 
     #define desired_UBRR ((f_clk/(16UL * baud_rate)) - 1)
 
@@ -108,7 +108,7 @@ void USART_init(unsigned long f_clk, unsigned long baud_rate, uint8_t data_bits,
 
 void USART_init(unsigned long f_clk, unsigned long baud_rate){
 
-    USART_init(f_clk, baud_rate, 8, 'N');
+    USART_init_full(f_clk, baud_rate, 8, 'N');
 }
 
 

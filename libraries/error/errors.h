@@ -10,12 +10,12 @@
 
         #include <SoftwareSerial.h>
 
-        SoftwareSerial bit_bang_serial(10, 11); // RX, TX
+  //      SoftwareSerial bit_bang_serial(10, 11); // RX, TX
 
     #endif
 
 
-    mySerial.println("Hello, world?");
+//    mySerial.println("Hello, world?");
 
 
 #endif

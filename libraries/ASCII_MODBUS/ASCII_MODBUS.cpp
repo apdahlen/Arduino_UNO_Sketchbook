@@ -37,9 +37,9 @@
 
 // Project specific includes
 
-    #include "MODBUS_support.h"
-    #include "MODBUS_USART.h"
-    #include "configuration.h"
+    #include "ASCII_MODBUS.h"
+    #include "../USART/USART.h"
+ //   #include "configuration.h"
     #include "errors.h"
 
 
@@ -62,6 +62,30 @@
 // Private variables
 
     char digit[ ] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+    static uint8_t RS_485_dir_pin;
+    static uint8_t USART_timeout_millieseconds;
+
+
+
+
+/**
+ * @brief Initialize the MODBUS - encapsulate the USART configuration...
+ *
+ * @param dir_pin declare the pin used to control the RS-485 transceiver
+ */
+    void MODBUS_init(uint8_t dir_pin, uint8_t timeout){
+        RS_485_dir_pin = dir_pin;
+        digitalWrite(dir_pin, LOW);
+        pinMode(dir_pin, OUTPUT);
+        USART_timeout_millieseconds = timeout;
+
+        USART_init_full(16000000ul, 19200l, 0x07, 'E');
+
+        USART_set_terminator(0x0A);                                 // ASCII line feed
+
+    }
+
+
 
 
 /**
@@ -188,18 +212,18 @@
 
     // Write the word
 
-        digitalWrite(RS_485_DIR_PIN, BUS_WRITE);
+        digitalWrite(RS_485_dir_pin, BUS_WRITE);
         delayMicroseconds(1000);
         USART_puts(MODBUS_cmd_line);
         delayMicroseconds(1500);
-        digitalWrite(RS_485_DIR_PIN, BUS_READ);
+        digitalWrite(RS_485_dir_pin, BUS_READ);
 
     // Verify the word was written by analyzing the echo
 
         milisecond_cnt = 0;
         while(!USART_is_string( )){
             delay(1);
-            if (++milisecond_cnt > USART_TIMEOUT_MILISECONDS){                                // prevent lockup if device is not connected
+            if (++milisecond_cnt > USART_timeout_millieseconds){                                // prevent lockup if device is not connected
               //error_message("MODBUS_put_word: USART timeout");
                 strncpy(ERROR_MSG, "MODBUS_put_word: USART timeout", SIZE_ERROR_MSG);
                 return 0x00;
@@ -261,11 +285,11 @@
 
     // Send the request for N words of data
 
-        digitalWrite(RS_485_DIR_PIN, BUS_WRITE);
+        digitalWrite(RS_485_dir_pin, BUS_WRITE);
         delayMicroseconds(1000);
         USART_puts(MODBUS_cmd_line);
         delayMicroseconds(1500);
-        digitalWrite(RS_485_DIR_PIN, BUS_READ);
+        digitalWrite(RS_485_dir_pin, BUS_READ);
 
     // Verify the word was written by analyzing the echo
 
@@ -334,12 +358,12 @@
     uint8_t ASCII_hex_2_bin(char c) {
         //if (c = ’0’)
         //    return 0;
-        if (c <= ’9’)
-            return c - ’0’;
+        if (c <= '9')
+            return c - '0';
     //   if (c < ’A’)
     //       return 0;
-        if (c <= ’F’)
-            return (c - ’A’) + 10;
+        //else if (c <= 'F')
+            return (c - 'A') + 10;
     }
 
 
@@ -364,7 +388,7 @@
         num_char =  USART_gets(MODBUS_str);
 
         // FIXME add code to verify the LRC
-        /
+
         return 0x01;
 
     }
@@ -380,10 +404,10 @@
   */
     uint8_t MODBUS_is_for_me(uint16_t my_node_addr){
 
-        uint8_t adr_1 = (ASCII_ASCII_hex_2_bin(MODBUS_str[1]);
-        uint8_t adr_0 = (ASCII_hex_2_bin(MODBUS_str[2]);
+        uint8_t adr_1 = (ASCII_hex_2_bin(MODBUS_str[1]));
+        uint8_t adr_0 = (ASCII_hex_2_bin(MODBUS_str[2]));
 
-        uint8_t msg_addr = (adr_1 << 4) + adr_2;
+        uint8_t msg_addr = (adr_1 << 4) + adr_0;
         if (msg_addr == my_node_addr)
             return 0x01;
         else
@@ -403,12 +427,12 @@
   *
   * @return the function code contained in the MODBUS message
   */
-    uint_t MODBUS_get_function_code(void){
+    uint8_t MODBUS_get_function_code(void){
 
-        uint8_t cmd_1 = (ASCII_hex_2_bin(MODBUS_str[3]);
-        uint8_t cmd_0 = (ASCII_hex_2_bin(MODBUS_str[4]);
+        uint8_t cmd_1 = (ASCII_hex_2_bin(MODBUS_str[3]));
+        uint8_t cmd_0 = (ASCII_hex_2_bin(MODBUS_str[4]));
 
-        uint8_t msg_addr = (cmd_1 << 4) + cmd_0;
+        return (cmd_1 << 4) + cmd_0;
     }
 
 
@@ -416,35 +440,35 @@
 
 // Helper functions for "read registers mode"
 
-    uint16_t MODBUS_get_addr(void);
+    uint16_t MODBUS_get_addr(void){
 
-        uint8_t addr_3 = (ASCII_hex_2_bin(MODBUS_str[5]);
-        uint8_t addr_2 = (ASCII_hex_2_bin(MODBUS_str[6]);
-        uint8_t addr_1 = (ASCII_hex_2_bin(MODBUS_str[7]);
-        uint8_t addr_0 = (ASCII_hex_2_bin(MODBUS_str[8]);
+        uint8_t addr_3 = (ASCII_hex_2_bin(MODBUS_str[5]));
+        uint8_t addr_2 = (ASCII_hex_2_bin(MODBUS_str[6]));
+        uint8_t addr_1 = (ASCII_hex_2_bin(MODBUS_str[7]));
+        uint8_t addr_0 = (ASCII_hex_2_bin(MODBUS_str[8]));
 
-        uint16_t starting_addr;
+        uint16_t addr;
 
-        starting_addr = (addr_3 << 4) + addr_2;
-        starting_addr = starting_addr << 8;
-        starting_addr += (addr_1 << 4) + addr_0;
+        addr = (addr_3 << 4) + addr_2;
+        addr = addr << 8;
+        addr += (addr_1 << 4) + addr_0;
 
-        return starting_addr;
+        return addr;
     }
 
 
-    uint16_t MODBUS_number_of_reg_to_read(read);
+    uint16_t MODBUS_number_of_reg_to_read(void){
 
-        uint8_t num_3 = (ASCII_hex_2_bin(MODBUS_str[9]);
-        uint8_t num_2 = (ASCII_hex_2_bin(MODBUS_str[10]);
-        uint8_t num_1 = (ASCII_hex_2_bin(MODBUS_str[11]);
-        uint8_t mum_0 = (ASCII_hex_2_bin(MODBUS_str[12]);
+        uint8_t num_3 = (ASCII_hex_2_bin(MODBUS_str[9]));
+        uint8_t num_2 = (ASCII_hex_2_bin(MODBUS_str[10]));
+        uint8_t num_1 = (ASCII_hex_2_bin(MODBUS_str[11]));
+        uint8_t num_0 = (ASCII_hex_2_bin(MODBUS_str[12]));
 
         uint16_t num;
 
         num = (num_3 << 4) + num_2;
         num = num << 8;
-        num += (addr_1 << 4) + num_0;
+        num += (num_1 << 4) + num_0;
 
         return num;
     }
@@ -480,10 +504,10 @@
 
     uint16_t MODBUS_get_data_to_write(void){
 
-        uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[9]);
-        uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[10]);
-        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[11]);
-        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[12]);
+        uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[ 9]));
+        uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[10]));
+        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[11]));
+        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[12]));
 
         uint16_t d;
 
