@@ -1,8 +1,7 @@
 
+#ifndef _ASCII_MODBUS
 
-#ifndef _ASCII_MODBUS_support
-
-    #define _ASCII_MODBUS_support
+    #define _ASCII_MODBUS
 
 // Common
 
@@ -22,7 +21,6 @@
 
     extern char MODBUS_cmd_line[size_of_cmd_lines];
     extern char MODBUS_reply_line[size_of_cmd_lines];
-
 
     uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data);
     uint8_t MODBUS_read_registers(uint16_t *destination, uint8_t physical_addr, uint16_t starting_mem_addr, uint16_t get_n_words );

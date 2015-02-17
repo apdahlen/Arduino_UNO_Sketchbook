@@ -38,8 +38,7 @@
 // Project specific includes
 
     #include "ASCII_MODBUS.h"
-    #include "../USART/USART.h"
- //   #include "configuration.h"
+    #include "USART.h"
     #include "errors.h"
 
 
@@ -201,7 +200,7 @@
  *        window.  Note that the GS1 takes approximately 2.5 mS to start reply.
  */
 
-    uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data) {
+    uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data){
 
         #define match 0x00
 

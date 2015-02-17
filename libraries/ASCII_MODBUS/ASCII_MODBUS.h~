@@ -1,14 +1,12 @@
 
 
-This code is under development...
+#ifndef _ASCII_MODBUS
 
-#ifndef _MODBUS_support
-
-    #define _MODBUS_support
+    #define _ASCII_MODBUS
 
 // Common
 
-    void init_MODBUS(void);
+    void MODBUS_init(uint8_t dir_pin, uint8_t timeout);
 
 // MASTER
 
