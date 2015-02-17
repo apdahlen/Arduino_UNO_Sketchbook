@@ -1,4 +1,4 @@
-// This code demonstrates how to use the MODBUS slave functions
+// This code demonstartes how to use the MODBUS slave functions
 
 #define RS_485_DIR_PIN              2
 
@@ -27,7 +27,7 @@ loop(){
             switch(MODBUS_get_function_code()){
 
                 case read_registers:
-
+                
                     MODBUS_addr = MODBUS_get_addr();
                     MODBUS_n = MODBUS_number_of_reg_to_read();
 
@@ -43,8 +43,6 @@ loop(){
                     MODBUS_data = MODBUS_get_data_to_write();
 
                     //FIXME insert your setters here
-
-                    //FIXME insert code to write back here
 
                     break;
 
@@ -63,3 +61,5 @@ loop(){
         }// end if (MODBUS_is_for_me()){
     }// end if (MODBUS_retrieve_new_msg()){
 }// end loop(){
+
+

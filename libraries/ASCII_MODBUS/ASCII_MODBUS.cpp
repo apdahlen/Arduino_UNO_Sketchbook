@@ -72,6 +72,13 @@
  * @brief Initialize the MODBUS - encapsulate the USART configuration...
  *
  * @param dir_pin declare the pin used to control the RS-485 transceiver
+ *
+ * @Warning The USART_ISR must still be called from the main Arduino sketch...
+ *
+ *      ISR(USART_RX_vect){
+ *          USART_handle_ISR();
+ *      }
+ *
  */
     void MODBUS_init(uint8_t dir_pin, uint8_t timeout){
         RS_485_dir_pin = dir_pin;
