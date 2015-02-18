@@ -230,6 +230,7 @@
         while(!USART_is_string( )){
             delay(1);
             if (++milisecond_cnt > USART_timeout_millieseconds){                                // prevent lockup if device is not connected
+              //error_message("MODBUS_put_word: USART timeout");
                 strncpy(ERROR_MSG, "MODBUS_put_word: USART timeout", SIZE_ERROR_MSG);
                 return 0x00;
             }
@@ -243,6 +244,7 @@
         else{
             return 0x00;
             strncpy(ERROR_MSG, "MODBUS_put_word: improper return from device", SIZE_ERROR_MSG);
+          //error_message("MODBUS_put_word: improper return from device");
         }
     }
 

@@ -84,16 +84,19 @@ void USART_init_full(unsigned long f_clk, unsigned long baud_rate, uint8_t data_
     UBRR0H = (uint8_t)(desired_UBRR >> 8);                          // Set the baud rate generator
     UBRR0L = (uint8_t)desired_UBRR;
     UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);           // Enable the USART hardware as well as the interrupt flag 
+    
+    UCSR0C = 0;
     if (data_bits == 8)
-        UCSR0C = (0 << UCSZ02) | (1 << UCSZ01) | (1 << UCSZ00);
+       UCSR0C = (0 << UCSZ02) | (1 << UCSZ01) | (1 << UCSZ00);
     if (data_bits == 7)
         UCSR0C = (0 << UCSZ02) | (1 << UCSZ01) | (0 << UCSZ00);
     if (parity == 'N')
-        UCSR0C = (0 << UPM01) | (0 << UPM00);
+        UCSR0C = UCSR0C | ((0 << UPM01) | (0 << UPM00));
     if (parity == 'E')
-        UCSR0C = (1 << UPM01) | (0 << UPM00);
+        UCSR0C = UCSR0C | ((1 << UPM01) | (0 << UPM00));
     if (parity == 'O')
-        UCSR0C = (1 << UPM01) | (1 << UPM00);
+        UCSR0C = UCSR0C | ((1 << UPM01) | (1 << UPM00));
+
   //UCSR0C = (1 << USBS0) | (1 << UCSZ01) | (1 << UCSZ00);          // 8 bits, 2 stop bit, no parity
   //UCSR0C = (1 << UPM01) | (1 << UCSZ01);                          // 7 bit, 1 stop, even parity
 
