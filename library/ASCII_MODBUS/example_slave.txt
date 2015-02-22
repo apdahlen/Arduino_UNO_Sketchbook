@@ -8,6 +8,8 @@
 #define write_single_register       6
 #define write_multiple_registers    16
 
+#define my_address                  0x01                            // TODO make this a int retrieved from EEPROM or from dip switch
+
 
 
 void setup(){
@@ -19,11 +21,13 @@ void setup(){
 loop(){
 
     uint16_t MODBUS_addr;
-    uint16_t MODBUS_n;
+    uint16_t n;
     uint16_t MODBUS_data;
+    uint16_t i;
+    uint16_t word;
 
     if (MODBUS_retrieve_new_msg()){
-        if (MODBUS_is_for_me()){
+        if (MODBUS_is_for_me(my_address)){
             switch(MODBUS_get_function_code()){
 
                 case read_registers:
@@ -31,9 +35,14 @@ loop(){
                     MODBUS_addr = MODBUS_get_addr();
                     MODBUS_n = MODBUS_number_of_reg_to_read();
 
-                    //FIXME insert your getters here
+                    for(i = 0; i < n; i++){
 
-                    //FIXME insert code to write back here
+                        // FIXME insert your getters here
+
+                        MODBUS_slave_collect_registers(i, word);
+                    }
+
+                    MODBUS_slave_put_N_words();
 
                     break;
 
@@ -44,7 +53,7 @@ loop(){
 
                     //FIXME insert your setters here
 
-                    //FIXME insert code to write back here
+                    MODBUS_echo( );                                     // when writing a single register simple echo the original string
 
                     break;
 

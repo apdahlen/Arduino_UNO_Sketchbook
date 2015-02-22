@@ -125,20 +125,20 @@
  * 
  * @param *c is the source containing the character string
  * 
- * @param length number of characters in the input string.  This parameter is
+ * @param N_char number of characters in the input string.  This parameter is
  *        required as the input string may contain the NULL char.
  *
  * @note reference the GS1 documentation for more information.
  */
 
-    void pack_ASCII_str(char *line, uint8_t *c, uint8_t length){
+    void pack_ASCII_str(char *line, uint8_t *c, uint8_t N_char){
 
-        uint8_t LRC = LRC_gen(c, length);
+        uint8_t LRC = LRC_gen(c, N_char);
 
         *line++ = ':';
 
-        byte_array_2_str(line, length, c);
-        line+= length << 1;
+        byte_array_2_str(line, N_char, c);
+        line+= N_chars << 1;
         *line++ = digit[LRC >> 4];
         *line++ = digit[LRC & 0x0F];
         *line++ = 0x0D;                                             // CR
@@ -521,4 +521,46 @@
 
         return d;
 
+    }
+
+
+
+
+
+
+    void MODBUS_slave_put_N_words(uint8_t N, uint8_t physical_addr){
+
+        #define match 0x00
+
+        uint8_t cmd_str_hex[] = { physical_addr, MODBUS_WRITE, N} ;
+
+        uint16_t milisecond_cnt;
+
+        uint8_t i;
+
+        for(i = 0; i < N; i++){
+
+            cmd_str_hex[(i * 2) + 3] = registers[i] >> 8;
+            cmd_str_hex[(i * 2) + 4] = mem_addr & 0x00FF;
+
+        }
+
+        pack_ASCII_str(MODBUS_cmd_line, cmd_str_hex, 3 + (N * 2));
+
+    // Write the word
+
+        digitalWrite(RS_485_dir_pin, BUS_WRITE);
+        delayMicroseconds(1000);
+        USART_puts(MODBUS_cmd_line);
+        delayMicroseconds(1500);
+        digitalWrite(RS_485_dir_pin, BUS_READ);
+    }
+
+#define N)REGS 50
+
+uint16_t regs[N_REGS];
+
+    void MODBUS_slave_collect_regs(uint16_t index, uint16_t reg){
+
+        registers[index] = D;
     }
