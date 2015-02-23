@@ -1,4 +1,4 @@
-// This code demonstrates how to use the MODBUS slave functions
+// This code demonstartes how to use the MODBUS slave functions
 
 #define RS_485_DIR_PIN              2
 
@@ -7,8 +7,6 @@
 #define read_registers              3
 #define write_single_register       6
 #define write_multiple_registers    16
-
-#define my_address                  0x01                            // TODO make this a int retrieved from EEPROM or from dip switch
 
 
 
@@ -21,28 +19,21 @@ void setup(){
 loop(){
 
     uint16_t MODBUS_addr;
-    uint16_t n;
+    uint16_t MODBUS_n;
     uint16_t MODBUS_data;
-    uint16_t i;
-    uint16_t word;
 
     if (MODBUS_retrieve_new_msg()){
-        if (MODBUS_is_for_me(my_address)){
+        if (MODBUS_is_for_me()){
             switch(MODBUS_get_function_code()){
 
                 case read_registers:
-
+                
                     MODBUS_addr = MODBUS_get_addr();
                     MODBUS_n = MODBUS_number_of_reg_to_read();
 
-                    for(i = 0; i < n; i++){
+                    //FIXME insert your getters here
 
-                        // FIXME insert your getters here
-
-                        MODBUS_slave_collect_registers(i, word);
-                    }
-
-                    MODBUS_slave_put_N_words();
+                    //FIXME insert code to write back here
 
                     break;
 
@@ -52,8 +43,6 @@ loop(){
                     MODBUS_data = MODBUS_get_data_to_write();
 
                     //FIXME insert your setters here
-
-                    MODBUS_echo( );                                     // when writing a single register simple echo the original string
 
                     break;
 
@@ -72,3 +61,5 @@ loop(){
         }// end if (MODBUS_is_for_me()){
     }// end if (MODBUS_retrieve_new_msg()){
 }// end loop(){
+
+
