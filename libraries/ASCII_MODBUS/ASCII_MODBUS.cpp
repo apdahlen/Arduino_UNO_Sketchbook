@@ -402,83 +402,6 @@
 
 
 
- /**
-  * @brief Determine if the MODBUS message held in the  MODBUS_str[] buffer
-  *        is addressed to to this slave.
-  *
-  * @return 0 = address does not match, 1 = address match
-  */
-    uint8_t MODBUS_is_for_me(uint16_t my_node_addr){
-
-        uint8_t adr_1 = (ASCII_hex_2_bin(MODBUS_str[1]));
-        uint8_t adr_0 = (ASCII_hex_2_bin(MODBUS_str[2]));
-
-        uint8_t msg_addr = (adr_1 << 4) + adr_0;
-        if (msg_addr == my_node_addr)
-            return 0x01;
-        else
-            return 0x00;
-    }
-
-
-
-
- /**
-  * @brief A new MODBUS string is being evaluated.  Return the function code.
-  * Defined codes include:
-  *
-  *      3 - read registers
-  *     16 - write multiple registers
-  *      6 - write single register
-  *
-  * @return the function code contained in the MODBUS message
-  */
-    uint8_t MODBUS_slave_get_function_code(void){
-
-        uint8_t cmd_1 = (ASCII_hex_2_bin(MODBUS_str[3]));
-        uint8_t cmd_0 = (ASCII_hex_2_bin(MODBUS_str[4]));
-
-        return (cmd_1 << 4) + cmd_0;
-    }
-
-
-
-
-// Helper functions for "read registers mode"
-
-    uint16_t MODBUS_slave_get_addr(void){
-
-        uint8_t addr_3 = (ASCII_hex_2_bin(MODBUS_str[5]));
-        uint8_t addr_2 = (ASCII_hex_2_bin(MODBUS_str[6]));
-        uint8_t addr_1 = (ASCII_hex_2_bin(MODBUS_str[7]));
-        uint8_t addr_0 = (ASCII_hex_2_bin(MODBUS_str[8]));
-
-        uint16_t addr;
-
-        addr = (addr_3 << 4) + addr_2;
-        addr = addr << 8;
-        addr += (addr_1 << 4) + addr_0;
-
-        return addr;
-    }
-
-
-    uint16_t MODBUS_slave_number_of_reg_to_read(void){
-
-        uint8_t num_3 = (ASCII_hex_2_bin(MODBUS_str[9]));
-        uint8_t num_2 = (ASCII_hex_2_bin(MODBUS_str[10]));
-        uint8_t num_1 = (ASCII_hex_2_bin(MODBUS_str[11]));
-        uint8_t num_0 = (ASCII_hex_2_bin(MODBUS_str[12]));
-
-        uint16_t num;
-
-        num = (num_3 << 4) + num_2;
-        num = num << 8;
-        num += (num_1 << 4) + num_0;
-
-        return num;
-    }
-
 
 // Helper functions for write multiple registers mode
 
@@ -494,7 +417,7 @@
 
     void MODBUS_slave_echo(void){
 
-        char term_str[] = {0x0A, 0x00};                         // CR, LF, NULL
+        char term_str[] = {0x0A, 0x00};                         // CR, LF, NULL  - Note CR is already contained in the received string
         strncpy(MODBUS_cmd_line, MODBUS_str, size_of_cmd_lines);
         strncat (MODBUS_cmd_line, term_str, size_of_cmd_lines);
 
@@ -505,13 +428,8 @@
         digitalWrite(RS_485_dir_pin, BUS_WRITE);
         delayMicroseconds(1000);
         USART_puts(MODBUS_cmd_line);
-     //   USART_puts(term_str);
         delayMicroseconds(1500);
         digitalWrite(RS_485_dir_pin, BUS_READ);
-
- //               *line++ = 0x0D;                                             // CR
- //       *line++ = 0x0A;                                             // LF
- //       *line++ = 0x00;
 
     }
 
@@ -519,12 +437,17 @@
 
 
 
- uint16_t MODBUS_slave_get_single_reg(void){
+ /**
+  * @brief 
+  *
+  * @return 
+  */
+    uint16_t MODBUS_get_Nth_word(uint8_t N){
 
-        uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[ 9]));
-        uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[10]));
-        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[11]));
-        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[12]));
+        uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[N    ]));
+        uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[N + 1]));
+        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[N + 2]));
+        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[N + 3]));
 
         uint16_t d;
 
@@ -537,13 +460,23 @@
     }
 
 
+    uint8_t MODBUS_get_Nth_int(uint8_t N){
+
+        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[N    ]));
+        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[N + 1]));
+
+        return (d_1 << 4) + d_0;
+
+    }
+
+
 
 #define N_REGS 50
 
 uint16_t regs[N_REGS];
 
 
-    void MODBUS_slave_put_N_words(uint8_t N, uint8_t physical_addr){
+    void MODBUS_put_N_words(uint8_t N, uint8_t physical_addr){
 
         #define match 0x00
 
@@ -553,7 +486,7 @@ uint16_t regs[N_REGS];
 
         uint8_t i;
 
-        for(i = 0; i < N; i++){
+        for(i = 0; i < N; i++){                             // take 16-bit words stored in regs and split into 8-bit
 
             cmd_str_hex[(i * 2) + 3] = regs[i] >> 8;
             cmd_str_hex[(i * 2) + 4] = regs[i + 1] & 0x00FF;
@@ -573,7 +506,7 @@ uint16_t regs[N_REGS];
 
 
 
-    void MODBUS_slave_collect_regs(uint16_t index, uint16_t D){
+    void MODBUS_buffer_words(uint16_t index, uint16_t D){
 
         regs[index] = D;
     }

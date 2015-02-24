@@ -28,7 +28,7 @@
     #define write_single_register       6
     #define write_multiple_registers    16
 
-    #define my_address                  0x01                            // TODO make this a int retrieved from EEPROM or from dip switch
+    #define MY_ADDR                  0x01                            // TODO make this an int retrieved from EEPROM or from dip switch
 
     #define BB_serial_max_char          50
 
