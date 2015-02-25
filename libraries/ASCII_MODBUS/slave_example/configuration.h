@@ -5,6 +5,8 @@
     #define F_CLK 16000000UL
     #define BAUD_RATE 9600L
 
+    #define MY_ADDR                  0x02                            // TODO make this an int retrieved from EEPROM or from dip switch
+
     #define LINE_TERMINATOR 0x0A    // ASCII Line Feed
 
     #define BUF_LEN 100
@@ -28,7 +30,6 @@
     #define write_single_register       6
     #define write_multiple_registers    16
 
-    #define MY_ADDR                  0x01                            // TODO make this an int retrieved from EEPROM or from dip switch
 
     #define BB_serial_max_char          50
 

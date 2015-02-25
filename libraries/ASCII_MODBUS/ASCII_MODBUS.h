@@ -42,6 +42,6 @@
     uint8_t MODBUS_get_Nth_int(uint8_t N);
 
     void MODBUS_buffer_words(uint16_t index, uint16_t D);
-    void MODBUS_put_N_words(uint8_t N, uint8_t physical_addr);
+    void MODBUS_put_N_words(uint8_t N, uint8_t slave_addr);
 
 #endif

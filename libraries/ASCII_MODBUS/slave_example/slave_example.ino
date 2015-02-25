@@ -10,26 +10,43 @@
     #include <string.h>
     #include <ctype.h>
 
+
 // Arduino libraries: see http://arduino.cc/en/Reference/Libraries
 
     #include <SoftwareSerial.h>
 
-// Project specific includes
 
+// Project specific includes
 
     #include "configuration.h"
     #include "error.h"
     #include "USART.h"
     #include "ASCII_MODBUS.h"
 
+
 // Global variables
 
     SoftwareSerial BB_serial(10, 11);                                   // RX, TX for bit bang serial
 
+    char line[BB_serial_max_char];
+
+    uint16_t addr;
+    uint16_t n;
+    uint16_t data;
+    uint16_t i;
+    uint16_t code;
+
+// Function declarations
+
+    void service_read_holding_reg(void);
+    void service_preset_single_reg(void);
+    void service_preset_multiple_regs(void);
+
+
 void setup(){
 
-    BB_serial.begin(9600);
-    MODBUS_init(RS_485_DIR_PIN, USART_TIMEOUT);
+//    BB_serial.begin(9600);
+//    MODBUS_init(RS_485_DIR_PIN, USART_TIMEOUT);
 
 }
 
@@ -68,42 +85,28 @@ ISR(USART_RX_vect){
 
 void loop(){
 
-    char line[BB_serial_max_char];
 
-    uint16_t addr;
-    uint16_t n;
-    uint16_t data;
-    uint16_t i;
-    uint16_t code;
+//    static uint8_t waiting = 0;
 
-    static uint8_t waiting = 0;
-
-    if(!waiting){
-        snprintf(line, BB_serial_max_char, "Waiting for a MODBUS string\n");
-        BB_serial.print(line);
-        waiting = 1;
-    }
+//    if(!waiting){
+//      //snprintf(line, BB_serial_max_char, "Waiting for a MODBUS string\n");
+//      //BB_serial.print(line);
+//        waiting = 1;
+//    }
 
     if(MODBUS_slave_is_new_msg()){
-        snprintf(line, BB_serial_max_char, "New message received!\n");
-        BB_serial.print(line);
-        waiting = 0;
+      //snprintf(line, BB_serial_max_char, "New message received!\n");
+      //BB_serial.print(line);
+      //waiting = 0;
 
-#define MODBUS_PHYSICAL_ADDR        1       // Specify the starting positions for the various fields
-#define MODBUS_CMD_CODE             3
+        #define MODBUS_SLAVE_ADDR           1       // Specify the starting positions for the various fields
+        #define MODBUS_FUNCTION             3
 
-#define MODE_3_START_DATA_ADDR      5
-#define MODE_3_NUM_WORDS_TO_READ    9
+          if(MODBUS_get_Nth_int(MODBUS_SLAVE_ADDR) == MY_ADDR){
+              //snprintf(line, BB_serial_max_char, "\t and its for me\n");
+              //BB_serial.print(line);
 
-
-#define MODE_6_START_ADDR           5
-#define MODE_6_FIRST_DATA           9
-
-          if(MODBUS_get_Nth_int(MODBUS_PHYSICAL_ADDR) == MY_ADDR){
-            //snprintf(line, BB_serial_max_char, "\t and its for me\n");
-            //BB_serial.print(line);
-
-            code = MODBUS_get_Nth_int(MODBUS_CMD_CODE);
+            code = MODBUS_get_Nth_int(MODBUS_FUNCTION);
                 //snprintf(line, BB_serial_max_char, "\t function code = %x\n", code);
                 //BB_serial.print(line);
 
@@ -111,118 +114,194 @@ void loop(){
 
             switch(code){
 
-            /***************************************************************************************
-             *
-             *  MODBUS mode 3: read holding registers
-             *
-             *     ----------------------------------------------------
-             *    | Master Frame Format                                |
-             *    |----------------------------------------------------|
-             *    | Name                     | Length (char) | Example |
-             *    |--------------------------|---------------|---------|
-             *    | Start                    |      1        |  :      |
-             *    | Station address          |      2        |  01     |
-             *    | Function                 |      2        |  03     |
-             *    | Starting register addr   |      4        |  019B   |
-             *    | Number of words to read  |      4        |  0001   |
-             *    | LRC                      |      2        |  FIXME  |
-             *    | (CR/LF) pair             |      2        |         |
-             *     ----------------------------------------------------
-             *
-             * This slave will respond
-             */
-
                 case READ_HOLDING_REGISTERS:
-
-                    addr = MODBUS_get_Nth_word(MODE_3_START_DATA_ADDR);
-                    n = MODBUS_get_Nth_word(MODE_3_NUM_WORDS_TO_READ);
-
-
-                    //snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
-                    //BB_serial.print(line);
-
-                    //snprintf(line, BB_serial_max_char, "\t num regs to read = %x\n", n);
-                    //BB_serial.print(line);
-
-                    switch(addr)
-
-                        case 0x0000:                                           // hardcode a test case: reads from address 0 return "AAAA"
-
-                            MODBUS_buffer_words(0, 0xAAAA);
-                            MODBUS_put_N_words(1, MY_ADDR);
-
-                            break;
-
-                        case 0x0001:                                           // another test case: reads from address 1 return N words counting up from 1
-
-                            MODBUS_buffer_words(0, 0xAAAA);
-
-                            for(i = 0; i < n; i++){
-                                MODBUS_buffer_words(i, i + 1);
-                            }
-                            MODBUS_put_N_words(n, MY_ADDR);
-
-                            break;
-
-
-                        // TODO insert your cases here
-
-
+                    service_read_holding_reg();
                     break;
-
-
-            /***************************************************************************************
-             *
-             *  MODBUS mode 6: Preset a single register
-             *
-             *     ----------------------------------------------------
-             *    | Master Frame Format                                |
-             *    |----------------------------------------------------|
-             *    | Name                     | Length (char) | Example |
-             *    |--------------------------|---------------|---------|
-             *    | Start                    |      1        |  :      |
-             *    | Station address          |      2        |  01     |
-             *    | Function                 |      2        |  06     |
-             *    | Register address         |      4        |  019B   |
-             *    | Preset data              |      4        |  0001   |
-             *    | LRC                      |      2        |  FIXME  |
-             *    | (CR/LF) pair             |      2        |         |
-             *     ----------------------------------------------------
-             *
-             *
-             */
 
                 case PRESET_SINGLE_REGISTER:
-
-                    addr = MODBUS_get_Nth_word(MODE_6_START_ADDR);
-                    data = MODBUS_get_Nth_word(MODE_6_FIRST_DATA);
-
-                    //snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
-                    //BB_serial.print(line);
-
-                    //snprintf(line, BB_serial_max_char, "\t data = %x\n", data);
-                    //BB_serial.print(line);
-
-                    //FIXME insert your setters here
-
-                    MODBUS_slave_echo( );                                     // when writing a single register simple echo the original string
-                    snprintf(line, BB_serial_max_char, "%s", MODBUS_cmd_line);
-                    BB_serial.print(line);
+                    service_preset_single_reg();
                     break;
-
 
                 case PRESET_MULTIPLE_REGISTERS:
-
-                    //FIXME develop these function when you have time
-
-
+                    service_preset_multiple_regs();
                     break;
 
-        //        default:
-
-                    // FIXME debug output error in
- 
+                default:
+                    ;
             }// end switch
+
         }// end if (MODBUS_is_for_me()){
     }// end if (MODBUS_retrieve_new_msg()){
 }// end loop(){
+
+
+
+
+/***************************************************************************************************
+ *
+ *  MODBUS mode 3: read holding registers
+ *
+ *     ----------------------------------------------------
+ *    | Master Frame Format                                |
+ *    |----------------------------------------------------|
+ *    | Name                     | Length (char) | Example |
+ *    |--------------------------|---------------|---------|
+ *    | Start                    |      1        |  :      |
+ *    | Slave address            |      2        |  01     |
+ *    | Function                 |      2        |  03     |
+ *    | Starting register addr   |      4        |  019B   |
+ *    | Number of words to read  |      4        |  0001   |
+ *    | LRC                      |      2        |  FIXME  |
+ *    | (CR/LF) pair             |      2        |         |
+ *     ----------------------------------------------------
+ *
+ * @note This routine contains two predefined tests.
+ *
+ *  1) Reading address 0x0000 with N = 1 will return 0XAAAA
+ *
+ *  2) Reading address 0x0001 will a request for n words returns the requested n words.  The words
+ *     contains sequential integers starting with 1.
+ */
+
+    #define MODE_3_START_DATA_ADDR      5
+    #define MODE_3_NUM_WORDS_TO_READ    9
+
+void service_read_holding_reg(void){
+
+    addr = MODBUS_get_Nth_word(MODE_3_START_DATA_ADDR);
+    n = MODBUS_get_Nth_word(MODE_3_NUM_WORDS_TO_READ);
+
+    //snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
+    //BB_serial.print(line);
+
+    //snprintf(line, BB_serial_max_char, "\t num regs to read = %x\n", n);
+    //BB_serial.print(line);
+
+    switch(addr){
+
+        case 0x0000:                                                // hardcode a test case: reads from address 0 return "AAAA"
+
+            MODBUS_buffer_words(0, 0xABCD);
+            MODBUS_put_N_words(1, MY_ADDR);
+
+            break;
+
+        case 0x0001:                                                // another test case: reads from address 1 return N words counting up from 1
+
+            for(i = 0; i < n; i++){
+                MODBUS_buffer_words(i, i + 1);
+            }
+            MODBUS_put_N_words(n, MY_ADDR);
+
+            break;
+
+
+
+        // TODO insert your cases here
+
+
+
+        default:
+            ;
+ 
+    }// end switch
+}
+
+/***************************************************************************************************
+ *
+ *  MODBUS mode 6: Preset a single register
+ *
+ *     ----------------------------------------------------
+ *    | Master Frame Format                                |
+ *    |----------------------------------------------------|
+ *    | Name                     | Length (char) | Example |
+ *    |--------------------------|---------------|---------|
+ *    | Start                    |      1        |  :      |
+ *    | Slave address            |      2        |  01     |
+ *    | Function                 |      2        |  06     |
+ *    | Register address         |      4        |  019B   |
+ *    | Preset data              |      4        |  0001   |
+ *    | LRC                      |      2        |  FIXME  |
+ *    | (CR/LF) pair             |      2        |         |
+ *     ----------------------------------------------------
+ *
+ */
+
+    #define MODE_6_STARTING_ADDR        5
+    #define MODE_6_FIRST_DATA           9
+
+void service_preset_single_reg(void){
+
+    addr = MODBUS_get_Nth_word(MODE_6_STARTING_ADDR);
+    data = MODBUS_get_Nth_word(MODE_6_FIRST_DATA);
+
+    //snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
+    //BB_serial.print(line);
+
+    //snprintf(line, BB_serial_max_char, "\t data = %x\n", data);
+    //BB_serial.print(line);
+
+    //FIXME insert your setter here
+
+    MODBUS_slave_echo( );                                     // when writing a single register simple echo the original string
+    //snprintf(line, BB_serial_max_char, "%s", MODBUS_cmd_line);
+    //BB_serial.print(line);
+
+}
+
+
+
+/***************************************************************************************************
+ *
+ *  MODBUS mode 16: Preset a multiple register
+ *
+ *     ----------------------------------------------------
+ *    | Master Frame Format                                |
+ *    |----------------------------------------------------|
+ *    | Name                     | Length (char) | Example |
+ *    |--------------------------|---------------|---------|
+ *    | Start                    |      1        |  :      |
+ *    | Slave address            |      2        |  01     |
+ *    | Function                 |      2        |  16     |
+ *    | Starting address         |      4        |  019B   |
+ *    | Num registers            |      2        |  0001   |
+ *    | Data                     |      N        |  N      |
+ *    | LRC                      |      2        |  FIXME  |
+ *    | (CR/LF) pair             |      2        |         |
+ *     ----------------------------------------------------
+ *
+ */
+
+    #define MODE_16_STARTING_ADDR        5
+    #define MODE_16_BYTE_COUNT           9
+    #define MODE_16_FIRST_DATA           11
+
+void service_preset_multiple_regs(void){
+
+    //TODO develop these function when you have time
+
+    addr = MODBUS_get_Nth_word(MODE_6_STARTING_ADDR);
+    n = MODBUS_get_Nth_int(MODE_16_BYTE_COUNT);
+
+
+    switch(addr){
+
+        case 0x0000:                        // typical
+
+            for(i = 0; i < n; i++){
+
+                data = MODBUS_get_Nth_word(MODE_6_FIRST_DATA + i);
+
+                //FIXME Insert your setter here
+
+                //MODBUS_buffer_words(i, i + 1);    // TODO need to make the return string
+            }
+            //MODBUS_put_N_words(n, MY_ADDR);
+
+        break;
+
+        default:
+            ;
+
+    }// end switch
+}

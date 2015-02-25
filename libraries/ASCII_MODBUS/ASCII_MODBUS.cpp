@@ -68,18 +68,18 @@
 
 
 /**
- * @brief Initialize the MODBUS - encapsulate the USART configuration...
+ * @brief Initialize the MODBUS - encapsulate the USART configuration.
  *
  * @param dir_pin declare the pin used to control the RS-485 transceiver
  *
- * @Warning The USART_ISR must still be called from the main Arduino sketch...
+ * @Warning The USART_ISR must still be called from the main Arduino sketch.
  *
  *      ISR(USART_RX_vect){
  *          USART_handle_ISR();
  *      }
  *
  * @warning The ASCII LF is used as the terminator.  Don't forget the ASCII CR
- *          is part of MOSBUS and will be held in  the buffer...
+ *          is part of MODBUS and will be held in the buffer.
  */
     void MODBUS_init(uint8_t dir_pin, uint8_t timeout){
         RS_485_dir_pin = dir_pin;
@@ -476,11 +476,11 @@
 uint16_t regs[N_REGS];
 
 
-    void MODBUS_put_N_words(uint8_t N, uint8_t physical_addr){
+    void MODBUS_put_N_words(uint8_t N, uint8_t slave_addr){
 
         #define match 0x00
 
-        uint8_t cmd_str_hex[] = { physical_addr, PRESET_SINGLE_REGISTER, N} ;
+        uint8_t cmd_str_hex[] = { slave_addr, READ_HOLDING_REGISTERS, N} ;
 
   //      uint16_t milisecond_cnt;
 
@@ -489,7 +489,9 @@ uint16_t regs[N_REGS];
         for(i = 0; i < N; i++){                             // take 16-bit words stored in regs and split into 8-bit
 
             cmd_str_hex[(i * 2) + 3] = regs[i] >> 8;
-            cmd_str_hex[(i * 2) + 4] = regs[i + 1] & 0x00FF;
+            cmd_str_hex[(i * 2) + 4] = regs[i] & 0x00FF;
+
+            //FIXME collect into string
 
         }
 
