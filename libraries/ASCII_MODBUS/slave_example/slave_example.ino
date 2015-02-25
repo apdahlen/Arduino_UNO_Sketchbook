@@ -13,7 +13,11 @@
 
 // Arduino libraries: see http://arduino.cc/en/Reference/Libraries
 
-    #include <SoftwareSerial.h>
+    #ifdef DEBUG
+
+        #include <SoftwareSerial.h>
+
+    #endif
 
 
 // Project specific includes
@@ -26,9 +30,12 @@
 
 // Global variables
 
-    SoftwareSerial BB_serial(10, 11);                                   // RX, TX for bit bang serial
+    #ifdef DEBUG
 
-    char line[BB_serial_max_char];
+        SoftwareSerial BB_serial(10, 11);                                   // RX, TX for bit bang serial
+        char line[BB_serial_max_char];
+
+    #endif
 
     uint16_t addr;
     uint16_t n;
@@ -45,12 +52,16 @@
 
 void setup(){
 
-//    BB_serial.begin(9600);
-//    MODBUS_init(RS_485_DIR_PIN, USART_TIMEOUT);
+    #ifdef DEBUG
+
+        BB_serial.begin(9600);
+        MODBUS_init(RS_485_DIR_PIN, USART_TIMEOUT);
+
+    #endif
 
 }
 
-/*********************************************************************************
+/***************************************************************************************************
  *  ______  ____   _____   ______  _____  _____    ____   _    _  _   _  _____
  * |  ____|/ __ \ |  __ \ |  ____|/ ____||  __ \  / __ \ | |  | || \ | ||  __ \
  * | |__  | |  | || |__) || |__  | |  __ | |__) || |  | || |  | ||  \| || |  | |
@@ -58,7 +69,7 @@ void setup(){
  * | |    | |__| || | \ \ | |____| |__| || | \ \ | |__| || |__| || |\  || |__| |
  * |_|     \____/ |_|  \_\|______|\_____||_|  \_\ \____/  \____/ |_| \_||_____/
  *
- ********************************************************************************/
+ **************************************************************************************************/
 
 ISR(USART_RX_vect){
 
@@ -72,7 +83,7 @@ ISR(USART_RX_vect){
     USART_handle_ISR();
 }
 
-/*********************************************************************************
+/***************************************************************************************************
  *  ____            _____  _  __ _____  _____    ____   _    _  _   _  _____
  * |  _ \    /\    / ____|| |/ // ____||  __ \  / __ \ | |  | || \ | ||  __ \
  * | |_) |  /  \  | |     | ' /| |  __ | |__) || |  | || |  | ||  \| || |  | |
@@ -80,37 +91,48 @@ ISR(USART_RX_vect){
  * | |_) |/ ____ \| |____ | . \| |__| || | \ \ | |__| || |__| || |\  || |__| |
  * |____//_/    \_\\_____||_|\_\\_____||_|  \_\ \____/  \____/ |_| \_||_____/
  *
- ********************************************************************************/
+ **************************************************************************************************/
 
 
 void loop(){
 
+    #ifdef DEBUG
 
-//    static uint8_t waiting = 0;
+        static uint8_t waiting = 0;
 
-//    if(!waiting){
-//      //snprintf(line, BB_serial_max_char, "Waiting for a MODBUS string\n");
-//      //BB_serial.print(line);
-//        waiting = 1;
-//    }
+        if(!waiting){
+            snprintf(line, BB_serial_max_char, "Waiting for a MODBUS string\n");
+            BB_serial.print(line);
+            waiting = 1;
+        }
+
+    #endif
 
     if(MODBUS_slave_is_new_msg()){
-      //snprintf(line, BB_serial_max_char, "New message received!\n");
-      //BB_serial.print(line);
-      //waiting = 0;
+
+        #ifdef DEBUG
+
+            snprintf(line, BB_serial_max_char, "New message received!\n");
+            BB_serial.print(line);
+            waiting = 0;
+
+        #endif
 
         #define MODBUS_SLAVE_ADDR           1       // Specify the starting positions for the various fields
         #define MODBUS_FUNCTION             3
 
-          if(MODBUS_get_Nth_int(MODBUS_SLAVE_ADDR) == MY_ADDR){
-              //snprintf(line, BB_serial_max_char, "\t and its for me\n");
-              //BB_serial.print(line);
+        if(MODBUS_get_Nth_int(MODBUS_SLAVE_ADDR) == MY_ADDR){
 
             code = MODBUS_get_Nth_int(MODBUS_FUNCTION);
-                //snprintf(line, BB_serial_max_char, "\t function code = %x\n", code);
-                //BB_serial.print(line);
 
+            #ifdef DEBUG
 
+                snprintf(line, BB_serial_max_char, "\t and its for me\n");
+                BB_serial.print(line);
+                snprintf(line, BB_serial_max_char, "\t function code = %x\n", code);
+                BB_serial.print(line);
+
+            #endif
 
             switch(code){
 
@@ -137,7 +159,7 @@ void loop(){
 
 
 
-/***************************************************************************************************
+/** ************************************************************************************************
  *
  *  MODBUS mode 3: read holding registers
  *
@@ -171,11 +193,14 @@ void service_read_holding_reg(void){
     addr = MODBUS_get_Nth_word(MODE_3_START_DATA_ADDR);
     n = MODBUS_get_Nth_word(MODE_3_NUM_WORDS_TO_READ);
 
-    //snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
-    //BB_serial.print(line);
+    #ifdef DEBUG
 
-    //snprintf(line, BB_serial_max_char, "\t num regs to read = %x\n", n);
-    //BB_serial.print(line);
+        snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
+        BB_serial.print(line);
+        snprintf(line, BB_serial_max_char, "\t num regs to read = %x\n", n);
+        BB_serial.print(line);
+
+    #endif
 
     switch(addr){
 
@@ -207,7 +232,7 @@ void service_read_holding_reg(void){
     }// end switch
 }
 
-/***************************************************************************************************
+/** ************************************************************************************************
  *
  *  MODBUS mode 6: Preset a single register
  *
@@ -235,11 +260,14 @@ void service_preset_single_reg(void){
     addr = MODBUS_get_Nth_word(MODE_6_STARTING_ADDR);
     data = MODBUS_get_Nth_word(MODE_6_FIRST_DATA);
 
-    //snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
-    //BB_serial.print(line);
+    #ifdef DEBUG
 
-    //snprintf(line, BB_serial_max_char, "\t data = %x\n", data);
-    //BB_serial.print(line);
+        snprintf(line, BB_serial_max_char, "\t starting addr = %x\n", addr);
+        BB_serial.print(line);
+        snprintf(line, BB_serial_max_char, "\t data = %x\n", data);
+        BB_serial.print(line);
+
+    #endif
 
     //FIXME insert your setter here
 
@@ -251,7 +279,7 @@ void service_preset_single_reg(void){
 
 
 
-/***************************************************************************************************
+/** ************************************************************************************************
  *
  *  MODBUS mode 16: Preset a multiple register
  *

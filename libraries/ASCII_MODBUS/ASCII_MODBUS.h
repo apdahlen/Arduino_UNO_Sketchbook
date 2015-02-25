@@ -31,11 +31,7 @@
     #define MODBUS_STR_LENGTH       100
 
     uint8_t MODBUS_slave_is_new_msg(void);
-  //  uint8_t MODBUS_is_for_me(uint16_t my_node_addr);
-  //  uint8_t MODBUS_slave_get_function_code(void);
-  //  uint16_t MODBUS_slave_get_addr(void);
-  //  uint16_t MODBUS_slave_number_of_reg_to_read(void);
-  //  uint16_t MODBUS_slave_get_single_reg(void);
+
     void  MODBUS_slave_echo(void);
 
     uint16_t MODBUS_get_Nth_word(uint8_t N);
