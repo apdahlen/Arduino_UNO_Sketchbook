@@ -7,7 +7,29 @@
     #include <Arduino.h>
 
     #include "GS1_support.h"
-    #include "../ASCII_MODBUS/ASCII_MODBUS.h"
+    #include "ASCII_MODBUS.h"
+
+/**
+ * @brief Initialize the GS1 by configuring the MODBUS connection and by
+ * sending the command to turn the device off.
+ *
+ * @brief Initialize the GS1 - encapsulate the USART configuration.
+ *
+ * @param dir_pin declare the pin used to control the RS-485 transceiver
+ *
+ * @param timeout set the amount of time (in milliseconds) for the slave to respond.
+ *
+ * @return result of operation, 1 = success, 0 = failure
+ *
+ */
+ uint8_t GS1_init(uint8_t dir_pin, uint8_t timeout){
+
+    MODBUS_init(dir_pin, timeout);
+    return MODBUS_put_word(physical_addr, Serial_Comm_RUN_Command, 0x0000);
+
+}
+
+
 
 
 
@@ -26,9 +48,6 @@
  uint8_t GS1_set_speed(uint8_t physical_addr, uint16_t deci_freq){
 
     return MODBUS_put_word(physical_addr, Serial_Comm_Speed_Reference, deci_freq);
- //   uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data) {
- //     uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data);
-
 }
 
 
@@ -46,7 +65,6 @@
     uint8_t GS1_turn_on(uint8_t physical_addr){
 
         return MODBUS_put_word(physical_addr, Serial_Comm_RUN_Command, 0x0001);
-
     }
 
 

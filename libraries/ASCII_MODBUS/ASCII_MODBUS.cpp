@@ -72,6 +72,8 @@
  *
  * @param dir_pin declare the pin used to control the RS-485 transceiver
  *
+ * @param timeout set the amount of time (in milliseconds) for the slave to respond.
+ *
  * @Warning The USART_ISR must still be called from the main Arduino sketch.
  *
  *      ISR(USART_RX_vect){

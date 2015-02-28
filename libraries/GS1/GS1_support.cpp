@@ -9,6 +9,28 @@
     #include "GS1_support.h"
     #include "ASCII_MODBUS.h"
 
+/**
+ * @brief Initialize the GS1 by configuring the MODBUS connection and by
+ * sending the command to turn the device off.
+ *
+ * @brief Initialize the GS1 - encapsulate the USART configuration.
+ *
+ * @param dir_pin declare the pin used to control the RS-485 transceiver
+ *
+ * @param timeout set the amount of time (in milliseconds) for the slave to respond.
+ *
+ * @return result of operation, 1 = success, 0 = failure
+ *
+ */
+ uint8_t GS1_init(uint8_t slave_address, uint8_t dir_pin, uint8_t timeout){
+
+    MODBUS_init(dir_pin, timeout);
+    return MODBUS_put_word(slave_address, Serial_Comm_RUN_Command, 0x0000);
+
+}
+
+
+
 
 
 /**
