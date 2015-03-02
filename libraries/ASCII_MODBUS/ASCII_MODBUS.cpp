@@ -189,7 +189,7 @@
  *
  *         : 01 06 0100 1770 71 CR LF   (spaces included to separate the fields)
  *
- * @param physical_addr a byte identifying a particular MODBUS device.  Note
+ * @param slave_addr a byte identifying a particular MODBUS device.  Note
  *        this must be manually programmed into a device such as the GS1.
  *
  * @param mem_addr a 16-bit value identifying the particular MODBUS register to
@@ -204,7 +204,7 @@
  *        window.  Note that the GS1 takes approximately 2.5 mS to start reply.
  */
 
-    uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data){
+    uint8_t MODBUS_put_word(uint8_t slave_addr, uint16_t mem_addr, uint16_t data){
 
         #define match 0x00
 
@@ -214,7 +214,7 @@
         uint8_t data_h = data >> 8;
         uint8_t data_l = data & 0x00FF;
 
-        uint8_t cmd_str_hex[] = { physical_addr, PRESET_SINGLE_REGISTER, mem_addr_h, mem_addr_l, data_h, data_l } ;
+        uint8_t cmd_str_hex[] = { slave_addr, PRESET_SINGLE_REGISTER, mem_addr_h, mem_addr_l, data_h, data_l } ;
 
         uint16_t milisecond_cnt;
 
@@ -265,7 +265,7 @@
  *
  * @param destination a pointer to the location the returned values will be placed
  *
- * @param physical_addr a byte identifying a particular MODBUS device.  Note this
+ * @param slave_addr a byte identifying a particular MODBUS device.  Note this
  *        must be manually programmed into a device such as the GS1.
  *
  * @param starting_mem_addr a 16-bit value identifying the first address to be read
@@ -277,7 +277,7 @@
  *        Note that the GS1 takes approximately 2.5 mS to start a reply.
  */
 
-   uint8_t MODBUS_read_registers(uint16_t *destination, uint8_t physical_addr, uint16_t starting_mem_addr, uint16_t get_n_words ) {
+   uint8_t MODBUS_read_registers(uint16_t *destination, uint8_t slave_addr, uint16_t starting_mem_addr, uint16_t get_n_words ) {
 
         uint8_t starting_mem_addr_h = starting_mem_addr >> 8;
         uint8_t starting_mem_addr_l = starting_mem_addr & 0x00FF;
@@ -285,7 +285,7 @@
         uint8_t get_n_words_h = get_n_words >> 8;
         uint8_t get_n_words_l = get_n_words & 0x00FF;
 
-        uint8_t cmd_str_hex[] = { physical_addr, READ_HOLDING_REGISTERS, starting_mem_addr_h, starting_mem_addr_l, get_n_words_h, get_n_words_l } ;
+        uint8_t cmd_str_hex[] = { slave_addr, READ_HOLDING_REGISTERS, starting_mem_addr_h, starting_mem_addr_l, get_n_words_h, get_n_words_l } ;
 
         uint16_t milisecond_cnt;
 
