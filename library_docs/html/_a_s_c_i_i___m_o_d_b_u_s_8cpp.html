@@ -4,17 +4,10 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Arduino_UNO_Library: ASCII_MODBUS/ASCII_MODBUS.cpp File Reference</title>
+<title>My Project: ASCII_MODBUS/ASCII_MODBUS.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript">
-  $(document).ready(initResizable);
-  $(window).load(resizeHeight);
-</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
@@ -29,7 +22,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Arduino_UNO_Library
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -69,21 +62,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-$(document).ready(function(){initNavTree('_a_s_c_i_i___m_o_d_b_u_s_8cpp.html','');});
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -98,6 +76,11 @@ $(document).ready(function(){initNavTree('_a_s_c_i_i___m_o_d_b_u_s_8cpp.html',''
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_1349056a6ae43af032a99be5062227fc.html">ASCII_MODBUS</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
@@ -116,7 +99,7 @@ $(document).ready(function(){initNavTree('_a_s_c_i_i___m_o_d_b_u_s_8cpp.html',''
 <code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8h_source.html">ASCII_MODBUS.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_u_s_a_r_t_8h_source.html">USART.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="errors_8h_source.html">errors.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="error_8h_source.html">error.h</a>&quot;</code><br/>
 </div>
 <p><a href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -124,6 +107,8 @@ $(document).ready(function(){initNavTree('_a_s_c_i_i___m_o_d_b_u_s_8cpp.html',''
 Macros</h2></td></tr>
 <tr class="memitem:a28ba3855c3afd3da796c1ad892471a9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a28ba3855c3afd3da796c1ad892471a9b">match</a>&#160;&#160;&#160;0x00</td></tr>
 <tr class="separator:a28ba3855c3afd3da796c1ad892471a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d32b36c9a5ab4aa9acec5da4ab6469f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a4d32b36c9a5ab4aa9acec5da4ab6469f">N_REGS</a>&#160;&#160;&#160;50</td></tr>
+<tr class="separator:a4d32b36c9a5ab4aa9acec5da4ab6469f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -133,12 +118,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a65451ce4c61ddfc6a452382845b69cba"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a65451ce4c61ddfc6a452382845b69cba">LRC_gen</a> (uint8_t *data, uint8_t length)</td></tr>
 <tr class="memdesc:a65451ce4c61ddfc6a452382845b69cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs the Longitudinal Redundancy Check (LRC). This is used while the MODBUS is in "ASCII mode". To quote wiki:  <a href="#a65451ce4c61ddfc6a452382845b69cba">More...</a><br/></td></tr>
 <tr class="separator:a65451ce4c61ddfc6a452382845b69cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34013151a2b5d9198f1ea6855dac8ee8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a34013151a2b5d9198f1ea6855dac8ee8">pack_ASCII_str</a> (char *line, uint8_t *c, uint8_t length)</td></tr>
-<tr class="memdesc:a34013151a2b5d9198f1ea6855dac8ee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a string formatted for a MODBUS device operating in ASCII mode. Preppend the ':' symbol, converting the bytes to ASCII Hex, and appending the LRC, CR plus LF.  <a href="#a34013151a2b5d9198f1ea6855dac8ee8">More...</a><br/></td></tr>
-<tr class="separator:a34013151a2b5d9198f1ea6855dac8ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e8a0c4bc0dc20490e56183b62ee6012"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a9e8a0c4bc0dc20490e56183b62ee6012">MODBUS_init</a> (uint8_t dir_pin, uint8_t timeout)</td></tr>
-<tr class="memdesc:a9e8a0c4bc0dc20490e56183b62ee6012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the MODBUS - encapsulate the USART configuration...  <a href="#a9e8a0c4bc0dc20490e56183b62ee6012">More...</a><br/></td></tr>
-<tr class="separator:a9e8a0c4bc0dc20490e56183b62ee6012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0febfeef8581c73721cdd841a1f1428e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a0febfeef8581c73721cdd841a1f1428e">pack_ASCII_str</a> (char *line, uint8_t *c, uint8_t N_char)</td></tr>
+<tr class="memdesc:a0febfeef8581c73721cdd841a1f1428e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a string formatted for a MODBUS device operating in ASCII mode. Preppend the ':' symbol, converting the bytes to ASCII Hex, and appending the LRC, CR plus LF.  <a href="#a0febfeef8581c73721cdd841a1f1428e">More...</a><br/></td></tr>
+<tr class="separator:a0febfeef8581c73721cdd841a1f1428e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20886521fcd4b0b64570be1d21edbb06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a20886521fcd4b0b64570be1d21edbb06">MODBUS_init</a> (uint8_t dir_pin, uint16_t timeout)</td></tr>
+<tr class="memdesc:a20886521fcd4b0b64570be1d21edbb06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the MODBUS - encapsulate the USART configuration.  <a href="#a20886521fcd4b0b64570be1d21edbb06">More...</a><br/></td></tr>
+<tr class="separator:a20886521fcd4b0b64570be1d21edbb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5be8f036c9ae31b5ddf1757b72a8f6cd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a5be8f036c9ae31b5ddf1757b72a8f6cd">MODBUS_put_word</a> (uint8_t physical_addr, uint16_t mem_addr, uint16_t data)</td></tr>
 <tr class="memdesc:a5be8f036c9ae31b5ddf1757b72a8f6cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is used to write a single word to the MODBUS. An string is 15 char long plus 2 for terminating characters e.g.,.  <a href="#a5be8f036c9ae31b5ddf1757b72a8f6cd">More...</a><br/></td></tr>
 <tr class="separator:a5be8f036c9ae31b5ddf1757b72a8f6cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,25 +133,24 @@ Functions</h2></td></tr>
 <tr class="memitem:ab90db153d56de14d8dc9d828d3a0fd48"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#ab90db153d56de14d8dc9d828d3a0fd48">ASCII_hex_2_bin</a> (char c)</td></tr>
 <tr class="memdesc:ab90db153d56de14d8dc9d828d3a0fd48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert an ASCII codex hex character into its integer equivalent.  <a href="#ab90db153d56de14d8dc9d828d3a0fd48">More...</a><br/></td></tr>
 <tr class="separator:ab90db153d56de14d8dc9d828d3a0fd48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6223143cb179fedc7abcfaab3a6d12db"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a6223143cb179fedc7abcfaab3a6d12db">MODBUS_retrieve_new_msg</a> (void)</td></tr>
-<tr class="memdesc:a6223143cb179fedc7abcfaab3a6d12db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if a valid MODBUS message has been received. On successful retrieval the message is held in a local MODBUS_str[] buffer.  <a href="#a6223143cb179fedc7abcfaab3a6d12db">More...</a><br/></td></tr>
-<tr class="separator:a6223143cb179fedc7abcfaab3a6d12db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7548135666dbe14daf7849eddb942e2e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a7548135666dbe14daf7849eddb942e2e">MODBUS_is_for_me</a> (uint16_t my_node_addr)</td></tr>
-<tr class="memdesc:a7548135666dbe14daf7849eddb942e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if the MODBUS message held in the MODBUS_str[] buffer is addressed to to this slave.  <a href="#a7548135666dbe14daf7849eddb942e2e">More...</a><br/></td></tr>
-<tr class="separator:a7548135666dbe14daf7849eddb942e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04b71c2df3437705d71ef835269ed6f5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a04b71c2df3437705d71ef835269ed6f5">MODBUS_get_function_code</a> (void)</td></tr>
-<tr class="memdesc:a04b71c2df3437705d71ef835269ed6f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A new MODBUS string is being evaluated. Return the function code. Defined codes include:  <a href="#a04b71c2df3437705d71ef835269ed6f5">More...</a><br/></td></tr>
-<tr class="separator:a04b71c2df3437705d71ef835269ed6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09ffff95ea859cc1f2c65344ac5e1cd4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a09ffff95ea859cc1f2c65344ac5e1cd4">MODBUS_get_addr</a> (void)</td></tr>
-<tr class="separator:a09ffff95ea859cc1f2c65344ac5e1cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37bb7332629920a1557f23ce26bbbf4f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a37bb7332629920a1557f23ce26bbbf4f">MODBUS_number_of_reg_to_read</a> (void)</td></tr>
-<tr class="separator:a37bb7332629920a1557f23ce26bbbf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d47a51958226d88846c68f65bb24a9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a5d47a51958226d88846c68f65bb24a9c">MODBUS_echo</a> (void)</td></tr>
-<tr class="separator:a5d47a51958226d88846c68f65bb24a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f208d5882b41932e964ee4569763cff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a7f208d5882b41932e964ee4569763cff">MODBUS_get_reg_to_write</a> (void)</td></tr>
-<tr class="separator:a7f208d5882b41932e964ee4569763cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62f00beb32c28be4a1b90e3aa94444d2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a62f00beb32c28be4a1b90e3aa94444d2">MODBUS_get_data_to_write</a> (void)</td></tr>
-<tr class="separator:a62f00beb32c28be4a1b90e3aa94444d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0e83f98aa4cbe98f8ab3f31a5193974"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#ae0e83f98aa4cbe98f8ab3f31a5193974">MODBUS_slave_is_new_msg</a> (void)</td></tr>
+<tr class="memdesc:ae0e83f98aa4cbe98f8ab3f31a5193974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if a valid MODBUS message has been received. On successful retrieval the message is held in a local MODBUS_str[] buffer.  <a href="#ae0e83f98aa4cbe98f8ab3f31a5193974">More...</a><br/></td></tr>
+<tr class="separator:ae0e83f98aa4cbe98f8ab3f31a5193974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a354a11a3d03d311a9900d7236579906b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a354a11a3d03d311a9900d7236579906b">MODBUS_slave_echo</a> (void)</td></tr>
+<tr class="memdesc:a354a11a3d03d311a9900d7236579906b"><td class="mdescLeft">&#160;</td><td class="mdescRight">MODBUS mode 6 is used to preset a single register. The slave replies with an echo of the original message.  <a href="#a354a11a3d03d311a9900d7236579906b">More...</a><br/></td></tr>
+<tr class="separator:a354a11a3d03d311a9900d7236579906b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7151bd8f89df4c0c1f2a380575f526e7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a7151bd8f89df4c0c1f2a380575f526e7">MODBUS_get_Nth_word</a> (uint8_t N)</td></tr>
+<tr class="memdesc:a7151bd8f89df4c0c1f2a380575f526e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The incoming MODBUS string is held in a line buffer called MODBUS_str. This function is used to pull a single word (16-bit value) from the buffer. Recall that the incoming string consists of hexadecimal encoded ASCII characters. This function combines 4 such characters.  <a href="#a7151bd8f89df4c0c1f2a380575f526e7">More...</a><br/></td></tr>
+<tr class="separator:a7151bd8f89df4c0c1f2a380575f526e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87ce1e446b8ea26342b104c03e765afd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a87ce1e446b8ea26342b104c03e765afd">MODBUS_get_Nth_int</a> (uint8_t N)</td></tr>
+<tr class="memdesc:a87ce1e446b8ea26342b104c03e765afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The incoming MODBUS string is held in a line buffer called MODBUS_str. This function is used to pull a single integer (8-bit value) from the buffer. Recall that the incoming string consists of hexadecimal encoded ASCII characters. This function combines 2 such characters.  <a href="#a87ce1e446b8ea26342b104c03e765afd">More...</a><br/></td></tr>
+<tr class="separator:a87ce1e446b8ea26342b104c03e765afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a1c41e79ca742173d561ed49998ece1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a2a1c41e79ca742173d561ed49998ece1">MODBUS_put_N_words</a> (uint8_t N, uint8_t slave_addr)</td></tr>
+<tr class="memdesc:a2a1c41e79ca742173d561ed49998ece1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is involved is assembling an outgoing MODBUS frame. When this function is called the values to be sent have already been collected into the buffer regs. This function prepends the slave address, MODBUS function code, and number of bytes to be sent. It them calls the pack_ASCII_str function which completes the frame assembly by prepending the ':' symbol and appending the LRC and CR/LF pair.  <a href="#a2a1c41e79ca742173d561ed49998ece1">More...</a><br/></td></tr>
+<tr class="separator:a2a1c41e79ca742173d561ed49998ece1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78f7e1349673cbc6130944d506d9e1e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a78f7e1349673cbc6130944d506d9e1e9">MODBUS_buffer_words</a> (uint16_t index, uint16_t D)</td></tr>
+<tr class="memdesc:a78f7e1349673cbc6130944d506d9e1e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">An outgoing MODBUS frame is built in a temporary buffer called regs. This setter function is used to place a new 16-bit value in the desired position.  <a href="#a78f7e1349673cbc6130944d506d9e1e9">More...</a><br/></td></tr>
+<tr class="separator:a78f7e1349673cbc6130944d506d9e1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -176,6 +160,8 @@ Variables</h2></td></tr>
 <tr class="separator:ae1e6e51e3c087c0585615a1c3b239bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cbc4c8baa1a6b94334e5891d0f3661b"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a9cbc4c8baa1a6b94334e5891d0f3661b">digit</a> [] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'}</td></tr>
 <tr class="separator:a9cbc4c8baa1a6b94334e5891d0f3661b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df361e74b84964cd0b6c994cadc3d5b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a9df361e74b84964cd0b6c994cadc3d5b">regs</a> [<a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a4d32b36c9a5ab4aa9acec5da4ab6469f">N_REGS</a>]</td></tr>
+<tr class="separator:a9df361e74b84964cd0b6c994cadc3d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a28ba3855c3afd3da796c1ad892471a9b"></a>
@@ -187,6 +173,20 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4d32b36c9a5ab4aa9acec5da4ab6469f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define N_REGS&#160;&#160;&#160;50</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00486">486</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
@@ -214,7 +214,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an unsigned integer </dd></dl>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00362">362</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00366">366</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,7 +250,7 @@ Variables</h2></td></tr>
 
 <p>This is a helper function for the pack_ASCII_str function. It converts hex digits to their equivalent ASCII characters. For example 0x1B is converted to {1 B}. </p>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00158">158</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00162">162</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,105 +281,111 @@ Variables</h2></td></tr>
 <p>This function performs the Longitudinal Redundancy Check (LRC). This is used while the MODBUS is in "ASCII mode". To quote wiki: </p>
 <p>"the 8-bit two's-complement value of the sum of all bytes modulo 2^8" </p>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00104">104</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00108">108</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5d47a51958226d88846c68f65bb24a9c"></a>
+<a class="anchor" id="a78f7e1349673cbc6130944d506d9e1e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MODBUS_echo </td>
+          <td class="memname">void MODBUS_buffer_words </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>D</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>An outgoing MODBUS frame is built in a temporary buffer called regs. This setter function is used to place a new 16-bit value in the desired position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>specified where the data is to be placed</td></tr>
+    <tr><td class="paramname">D</td><td>contains the data</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function is designed to be called from within a loop for example:</dd></dl>
+<div class="fragment"><div class="line"><span class="keywordflow">case</span> 0x0001:</div>
+<div class="line"></div>
+<div class="line">   <span class="keywordflow">for</span>(i = 0; i &lt; n; i++){</div>
+<div class="line">       <a class="code" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a78f7e1349673cbc6130944d506d9e1e9">MODBUS_buffer_words</a>(i, i + 1);</div>
+<div class="line">   }</div>
+<div class="line">   <a class="code" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a2a1c41e79ca742173d561ed49998ece1">MODBUS_put_N_words</a>(n, <a class="code" href="configuration_8h.html#af3093c7e611723030d843399839649a1">MY_ADDR</a>);</div>
+<div class="line"></div>
+<div class="line">   <span class="keywordflow">break</span>;</div>
+</div><!-- fragment --> 
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00551">551</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a87ce1e446b8ea26342b104c03e765afd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t MODBUS_get_Nth_int </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>N</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00493">493</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>The incoming MODBUS string is held in a line buffer called MODBUS_str. This function is used to pull a single integer (8-bit value) from the buffer. Recall that the incoming string consists of hexadecimal encoded ASCII characters. This function combines 2 such characters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N</td><td>is a pointer to the starting position of the desired integer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the 8-bit value. For example, the second field in a MODBUS string is a 8-bit slave address. </dd></dl>
+
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00475">475</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a09ffff95ea859cc1f2c65344ac5e1cd4"></a>
+<a class="anchor" id="a7151bd8f89df4c0c1f2a380575f526e7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t MODBUS_get_addr </td>
+          <td class="memname">uint16_t MODBUS_get_Nth_word </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>N</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The incoming MODBUS string is held in a line buffer called MODBUS_str. This function is used to pull a single word (16-bit value) from the buffer. Recall that the incoming string consists of hexadecimal encoded ASCII characters. This function combines 4 such characters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N</td><td>is a pointer to the starting position of the desired word.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the 16-bit value. For example the specified data address and register data are encoded as 16-bit values. </dd></dl>
 
 <p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00447">447</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a62f00beb32c28be4a1b90e3aa94444d2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t MODBUS_get_data_to_write </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00509">509</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a04b71c2df3437705d71ef835269ed6f5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t MODBUS_get_function_code </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A new MODBUS string is being evaluated. Return the function code. Defined codes include: </p>
-<p>3 - read registers 16 - write multiple registers 6 - write single register</p>
-<dl class="section return"><dt>Returns</dt><dd>the function code contained in the MODBUS message </dd></dl>
-
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00434">434</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7f208d5882b41932e964ee4569763cff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t MODBUS_get_reg_to_write </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00503">503</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a9e8a0c4bc0dc20490e56183b62ee6012"></a>
+<a class="anchor" id="a20886521fcd4b0b64570be1d21edbb06"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -392,7 +398,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>timeout</em>&#160;</td>
         </tr>
         <tr>
@@ -403,57 +409,58 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize the MODBUS - encapsulate the USART configuration... </p>
+<p>Initialize the MODBUS - encapsulate the USART configuration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dir_pin</td><td>declare the pin used to control the RS-485 transceiver</td></tr>
+    <tr><td class="paramname">timeout</td><td>set the amount of time (in milliseconds) for the slave to respond.</td></tr>
   </table>
   </dd>
 </dl>
-<p>The USART_ISR must still be called from the main Arduino sketch... </p>
+<p>The USART_ISR must still be called from the main Arduino sketch. </p>
 <pre class="fragment"> ISR(USART_RX_vect){
      USART_handle_ISR();
-</pre> 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00082">82</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+ }
+</pre><dl class="section warning"><dt>Warning</dt><dd>The ASCII LF is used as the terminator. Don't forget the ASCII CR is part of MODBUS and will be held in the buffer. </dd></dl>
+
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00086">86</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7548135666dbe14daf7849eddb942e2e"></a>
+<a class="anchor" id="a2a1c41e79ca742173d561ed49998ece1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t MODBUS_is_for_me </td>
+          <td class="memname">void MODBUS_put_N_words </td>
           <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>my_node_addr</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>N</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Determine if the MODBUS message held in the MODBUS_str[] buffer is addressed to to this slave. </p>
-<dl class="section return"><dt>Returns</dt><dd>0 = address does not match, 1 = address match </dd></dl>
-
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00409">409</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a37bb7332629920a1557f23ce26bbbf4f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">uint16_t MODBUS_number_of_reg_to_read </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>slave_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00464">464</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>This function is involved is assembling an outgoing MODBUS frame. When this function is called the values to be sent have already been collected into the buffer regs. This function prepends the slave address, MODBUS function code, and number of bytes to be sent. It them calls the pack_ASCII_str function which completes the frame assembly by prepending the ':' symbol and appending the LRC and CR/LF pair. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">N</td><td>number of words (16-bit) to be included in the frame</td></tr>
+    <tr><td class="paramname">slave_addr</td><td>The address of the sending slave </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00503">503</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
@@ -500,7 +507,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>result of operation, 1 = success, 0 = failure</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>There is a glitch as the RS-485 transceiver transitions from XMT to RCV. This delay moves the transition outside of the GS1's observation window. Note that the GS1 takes approximately 2.5 mS to start reply. </dd></dl>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00203">203</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00207">207</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
@@ -554,16 +561,39 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>There is a glitch as the RS-485 transceiver transitions from XMT to RCV. This delay moves the transition outside of the GS1's observation window. Note that the GS1 takes approximately 2.5 mS to start a reply. </dd></dl>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00276">276</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00280">280</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6223143cb179fedc7abcfaab3a6d12db"></a>
+<a class="anchor" id="a354a11a3d03d311a9900d7236579906b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t MODBUS_retrieve_new_msg </td>
+          <td class="memname">void MODBUS_slave_echo </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>MODBUS mode 6 is used to preset a single register. The slave replies with an echo of the original message. </p>
+<dl class="section note"><dt>Note</dt><dd>Note the CR character is already contained in the received string since the LF was used as the terminating character.</dd>
+<dd>
+For debug purposes the complete MODBUS_cmd_line is available. This function could be improved by removing this feature. </dd></dl>
+
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00418">418</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae0e83f98aa4cbe98f8ab3f31a5193974"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t MODBUS_slave_is_new_msg </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -575,11 +605,11 @@ Variables</h2></td></tr>
 <p>Determine if a valid MODBUS message has been received. On successful retrieval the message is held in a local MODBUS_str[] buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>0 = no new message, 1 = a valid message had been retrieved </dd></dl>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00387">387</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00389">389</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a34013151a2b5d9198f1ea6855dac8ee8"></a>
+<a class="anchor" id="a0febfeef8581c73721cdd841a1f1428e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -599,7 +629,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramname"><em>N_char</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -615,13 +645,13 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">*line</td><td>is the destination</td></tr>
     <tr><td class="paramname">*c</td><td>is the source containing the character string</td></tr>
-    <tr><td class="paramname">length</td><td>number of characters in the input string. This parameter is required as the input string may contain the NULL char.</td></tr>
+    <tr><td class="paramname">N_char</td><td>number of characters in the input string. This parameter is required as the input string may contain the NULL char.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>reference the GS1 documentation for more information. </dd></dl>
 
-<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00134">134</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00138">138</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
 
 </div>
 </div>
@@ -668,16 +698,26 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-</div><!-- contents -->
-</div><!-- doc-content -->
-<!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="navelem"><a class="el" href="dir_1349056a6ae43af032a99be5062227fc.html">ASCII_MODBUS</a></li><li class="navelem"><a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html">ASCII_MODBUS.cpp</a></li>
-    <li class="footer">Generated on Wed Feb 18 2015 20:06:34 for Arduino_UNO_Library by
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
-  </ul>
+<a class="anchor" id="a9df361e74b84964cd0b6c994cadc3d5b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t regs[<a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp.html#a4d32b36c9a5ab4aa9acec5da4ab6469f">N_REGS</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html#l00488">488</a> of file <a class="el" href="_a_s_c_i_i___m_o_d_b_u_s_8cpp_source.html">ASCII_MODBUS.cpp</a>.</p>
+
 </div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated on Mon Mar 2 2015 12:14:10 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
 </body>
 </html>

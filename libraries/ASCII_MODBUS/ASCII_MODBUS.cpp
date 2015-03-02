@@ -83,7 +83,7 @@
  * @warning The ASCII LF is used as the terminator.  Don't forget the ASCII CR
  *          is part of MODBUS and will be held in the buffer.
  */
-    void MODBUS_init(uint8_t dir_pin, uint8_t timeout){
+    void MODBUS_init(uint8_t dir_pin, uint16_t timeout){
         RS_485_dir_pin = dir_pin;
         digitalWrite(dir_pin, LOW);
         pinMode(dir_pin, OUTPUT);

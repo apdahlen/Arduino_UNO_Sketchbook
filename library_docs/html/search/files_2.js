@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['errors_2ecpp',['errors.cpp',['../errors_8cpp.html',1,'']]],
-  ['errors_2eh',['errors.h',['../errors_8h.html',1,'']]]
+  ['dds_2ec',['DDS.c',['../_d_d_s_8c.html',1,'']]],
+  ['dds_2eh',['DDS.h',['../_d_d_s_8h.html',1,'']]]
 ];

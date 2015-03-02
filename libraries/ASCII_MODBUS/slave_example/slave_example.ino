@@ -272,8 +272,13 @@ void service_preset_single_reg(void){
     //FIXME insert your setter here
 
     MODBUS_slave_echo( );                                     // when writing a single register simple echo the original string
-    //snprintf(line, BB_serial_max_char, "%s", MODBUS_cmd_line);
-    //BB_serial.print(line);
+    
+    #ifdef DEBUG
+
+        snprintf(line, BB_serial_max_char, "%s", MODBUS_cmd_line);
+        BB_serial.print(line);
+
+    #endif
 
 }
 

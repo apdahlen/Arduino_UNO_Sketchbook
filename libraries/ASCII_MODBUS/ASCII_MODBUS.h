@@ -5,7 +5,7 @@
 
 // Common
 
-    void MODBUS_init(uint8_t dir_pin, uint8_t timeout);
+    void MODBUS_init(uint8_t dir_pin, uint16_t timeout);
 
 // MASTER
 

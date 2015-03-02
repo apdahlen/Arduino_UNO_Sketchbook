@@ -4,17 +4,10 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Arduino_UNO_Library: error/errors.cpp Source File</title>
+<title>My Project: error/error.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript">
-  $(document).ready(initResizable);
-  $(window).load(resizeHeight);
-</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
@@ -29,7 +22,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Arduino_UNO_Library
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -69,21 +62,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-$(document).ready(function(){initNavTree('errors_8cpp_source.html','');});
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -98,15 +76,20 @@ $(document).ready(function(){initNavTree('errors_8cpp_source.html','');});
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_4c52cb8b55b918be67d078d7a231760a.html">error</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">errors.cpp</div>  </div>
+<div class="title">error.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="errors_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="errors_8h.html">errors.h</a>&quot;</span></div>
+<a href="error_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="error_8h.html">error.h</a>&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="errors_8h.html#a89fe1e08d759329a4cd64bba5614b391">    4</a></span>&#160;<span class="keywordtype">char</span> <a class="code" href="errors_8cpp.html#a89fe1e08d759329a4cd64bba5614b391">ERROR_MSG</a>[<a class="code" href="errors_8h.html#ad38150994613d98a47e691112af3f8f9">SIZE_ERROR_MSG</a>];</div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="error_8h.html#a89fe1e08d759329a4cd64bba5614b391">    4</a></span>&#160;<span class="keywordtype">char</span> <a class="code" href="error_8cpp.html#a89fe1e08d759329a4cd64bba5614b391">ERROR_MSG</a>[<a class="code" href="error_8h.html#ad38150994613d98a47e691112af3f8f9">SIZE_ERROR_MSG</a>];</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifdef SOFTWARE_SERIAL_DBG</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
@@ -137,19 +120,15 @@ $(document).ready(function(){initNavTree('errors_8cpp_source.html','');});
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="ttc" id="errors_8h_html"><div class="ttname"><a href="errors_8h.html">errors.h</a></div></div>
-<div class="ttc" id="errors_8h_html_ad38150994613d98a47e691112af3f8f9"><div class="ttname"><a href="errors_8h.html#ad38150994613d98a47e691112af3f8f9">SIZE_ERROR_MSG</a></div><div class="ttdeci">#define SIZE_ERROR_MSG</div><div class="ttdef"><b>Definition:</b> <a href="errors_8h_source.html#l00005">errors.h:5</a></div></div>
-<div class="ttc" id="errors_8cpp_html_a89fe1e08d759329a4cd64bba5614b391"><div class="ttname"><a href="errors_8cpp.html#a89fe1e08d759329a4cd64bba5614b391">ERROR_MSG</a></div><div class="ttdeci">char ERROR_MSG[SIZE_ERROR_MSG]</div><div class="ttdef"><b>Definition:</b> <a href="errors_8cpp_source.html#l00004">errors.cpp:4</a></div></div>
+<div class="ttc" id="error_8h_html"><div class="ttname"><a href="error_8h.html">error.h</a></div></div>
+<div class="ttc" id="error_8h_html_ad38150994613d98a47e691112af3f8f9"><div class="ttname"><a href="error_8h.html#ad38150994613d98a47e691112af3f8f9">SIZE_ERROR_MSG</a></div><div class="ttdeci">#define SIZE_ERROR_MSG</div><div class="ttdef"><b>Definition:</b> <a href="error_8h_source.html#l00005">error.h:5</a></div></div>
+<div class="ttc" id="error_8cpp_html_a89fe1e08d759329a4cd64bba5614b391"><div class="ttname"><a href="error_8cpp.html#a89fe1e08d759329a4cd64bba5614b391">ERROR_MSG</a></div><div class="ttdeci">char ERROR_MSG[SIZE_ERROR_MSG]</div><div class="ttdef"><b>Definition:</b> <a href="error_8cpp_source.html#l00004">error.cpp:4</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
-</div><!-- doc-content -->
 <!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="navelem"><a class="el" href="dir_4c52cb8b55b918be67d078d7a231760a.html">error</a></li><li class="navelem"><a class="el" href="errors_8cpp.html">errors.cpp</a></li>
-    <li class="footer">Generated on Wed Feb 18 2015 20:06:34 for Arduino_UNO_Library by
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
-  </ul>
-</div>
+<hr class="footer"/><address class="footer"><small>
+Generated on Mon Mar 2 2015 12:14:10 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
 </body>
 </html>

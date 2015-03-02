@@ -27,10 +27,10 @@
 
     uint8_t GS1_init(uint8_t slave_address, uint8_t dir_pin, uint8_t timeout);
 
-    uint8_t GS1_set_speed(uint8_t physical_addr, uint16_t deci_freq);
+    uint8_t GS1_set_speed(uint8_t slave_addr, uint16_t deci_freq);
 
-    uint8_t GS1_turn_on(uint8_t physical_addr);
+    uint8_t GS1_turn_on(uint8_t slave_addr);
 
-    uint8_t GS1_turn_off(uint8_t physical_addr);
+    uint8_t GS1_turn_off(uint8_t slave_addr);
 
 #endif
