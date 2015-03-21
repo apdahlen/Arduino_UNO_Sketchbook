@@ -1,0 +1,10 @@
+digraph "sketchbook" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_57e3097d5bf8259ea406c6ee741d086f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_57e3097d5bf8259ea406c6ee741d086f.html"];
+    dir_57e3097d5bf8259ea406c6ee741d086f [shape=plaintext label="sketchbook"];
+    dir_1f230a50cb8328eed74ee6db218aa7d6 [shape=box label="libraries" color="red" fillcolor="white" style="filled" URL="dir_1f230a50cb8328eed74ee6db218aa7d6.html"];
+  }
+}

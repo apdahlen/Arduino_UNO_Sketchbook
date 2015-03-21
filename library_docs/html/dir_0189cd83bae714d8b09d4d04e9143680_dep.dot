@@ -1,0 +1,9 @@
+digraph "sketchbook/libraries/DDS" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f230a50cb8328eed74ee6db218aa7d6 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="libraries" fontname="Helvetica", fontsize="10", URL="dir_1f230a50cb8328eed74ee6db218aa7d6.html"]
+  dir_0189cd83bae714d8b09d4d04e9143680 [shape=box, label="DDS", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0189cd83bae714d8b09d4d04e9143680.html"];
+  }
+}

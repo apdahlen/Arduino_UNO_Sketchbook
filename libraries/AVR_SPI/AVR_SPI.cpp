@@ -1,4 +1,22 @@
 
+/**
+ * @file AVR_SPI.cpp
+ *
+ * @author Aaron P. Dahlen
+ *
+ * @date 18 Feb 2015
+ *
+ * @brief Observe that the Arduino SPI library "allows you to communicate with
+ * SPI devices, with the Arduino as the master device."  The code contained in
+ * this library allows you to use the Arduino as a slave or as a master.
+ *
+ * @TODO add examples showing how to use the Arduino as a slave and as a master
+ *
+ * @see http://arduino.cc/en/Reference/SPI
+ */
+
+
+
 // AVR Libc includes
     #include <avr/io.h>
 
@@ -26,21 +44,19 @@
 
 
 
-
-
 /*******************************************************************************
- *  __  __           _            
- * |  \/  |         | |           
- * | \  / | __ _ ___| |_ ___ _ __ 
+ *  __  __           _
+ * |  \/  |         | |
+ * | \  / | __ _ ___| |_ ___ _ __
  * | |\/| |/ _` / __| __/ _ \ '__|
- * | |  | | (_| \__ \ ||  __/ |   
- * |_|  |_|\__,_|___/\__\___|_|   
+ * | |  | | (_| \__ \ ||  __/ |
+ * |_|  |_|\__,_|___/\__\___|_|
  *
- ******************************************************************************/                               
-                                
+ ******************************************************************************/
+
 
 /** AVR_SPI_master_init
- 
+ *
  * @brief Initialize the AVR SPI peripheral as master.
  *
  * @param none
@@ -51,8 +67,8 @@
  *
  *      pin:    function:
  *
- *      10      CS_not          // In master mode this is not part of the SPI.  This particular
- *                              // pin was selected for its close proximity to the other SPI pins.
+ *      10      CS_not              // In master mode this is not part of the SPI.  This particular
+ *                                  // pin was selected for its close proximity to the other SPI pins.
  *      11      MOSI
  *      12      MISO
  *      13      SCK
@@ -105,14 +121,14 @@ void AVR_SPI_master_xfr(uint8_t N, uint8_t *SPI_tx_buf, uint8_t *SPI_rx_buf){
 
 /*******************************************************************************
  *   _____ _
- *  / ____| |                
- * | (___ | | __ ___   _____ 
+ *  / ____| |
+ * | (___ | | __ ___   _____
  *  \___ \| |/ _` \ \ / / _ \
  *  ____) | | (_| |\ V /  __/
  * |_____/|_|\__,_| \_/ \___|
  *
- ******************************************************************************/                           
-                           
+ ******************************************************************************/
+
 
 void AVR_SPI_slave_init(void){
     /* Set MISO output, all others input */
@@ -154,12 +170,3 @@ void AVR_SPI_slave_put_16(uint16_t c){
     dummy = SPDR;                           // clear the SPI IF
 
 }
-
-
-
-
-
-
-
-
-

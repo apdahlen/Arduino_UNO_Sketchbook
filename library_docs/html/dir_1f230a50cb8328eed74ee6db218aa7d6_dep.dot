@@ -1,0 +1,24 @@
+digraph "sketchbook/libraries" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_57e3097d5bf8259ea406c6ee741d086f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="sketchbook" fontname="Helvetica", fontsize="10", URL="dir_57e3097d5bf8259ea406c6ee741d086f.html"]
+  subgraph clusterdir_1f230a50cb8328eed74ee6db218aa7d6 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_1f230a50cb8328eed74ee6db218aa7d6.html"];
+    dir_1f230a50cb8328eed74ee6db218aa7d6 [shape=plaintext label="libraries"];
+    dir_108a37fc8eb94a5f76a2daf90635ecd5 [shape=box label="ASCII_MODBUS" color="red" fillcolor="white" style="filled" URL="dir_108a37fc8eb94a5f76a2daf90635ecd5.html"];
+    dir_0dec7835227217febc1c150ef89cf1c3 [shape=box label="AVR_ADC" color="black" fillcolor="white" style="filled" URL="dir_0dec7835227217febc1c150ef89cf1c3.html"];
+    dir_765bb18c82b561f7d6169b82669aacd3 [shape=box label="AVR_SPI" color="black" fillcolor="white" style="filled" URL="dir_765bb18c82b561f7d6169b82669aacd3.html"];
+    dir_0189cd83bae714d8b09d4d04e9143680 [shape=box label="DDS" color="black" fillcolor="white" style="filled" URL="dir_0189cd83bae714d8b09d4d04e9143680.html"];
+    dir_1014db5a2b18bf62e46e9a541f0da85c [shape=box label="error" color="black" fillcolor="white" style="filled" URL="dir_1014db5a2b18bf62e46e9a541f0da85c.html"];
+    dir_a36af97c98f314615873874627d7ac7d [shape=box label="GS1" color="black" fillcolor="white" style="filled" URL="dir_a36af97c98f314615873874627d7ac7d.html"];
+    dir_7937ba35538e67fcc13b1e6b9b12af5c [shape=box label="LCD_scroll" color="black" fillcolor="white" style="filled" URL="dir_7937ba35538e67fcc13b1e6b9b12af5c.html"];
+    dir_918914eda52b5daa3fa7fa5a80e64904 [shape=box label="line_parser" color="black" fillcolor="white" style="filled" URL="dir_918914eda52b5daa3fa7fa5a80e64904.html"];
+    dir_65ccc759a0f9c7de4dd28389ff048c56 [shape=box label="USART" color="black" fillcolor="white" style="filled" URL="dir_65ccc759a0f9c7de4dd28389ff048c56.html"];
+  }
+  }
+  dir_108a37fc8eb94a5f76a2daf90635ecd5->dir_65ccc759a0f9c7de4dd28389ff048c56 [headlabel="1", labeldistance=1.5 headhref="dir_000002_000011.html"];
+  dir_108a37fc8eb94a5f76a2daf90635ecd5->dir_1014db5a2b18bf62e46e9a541f0da85c [headlabel="1", labeldistance=1.5 headhref="dir_000002_000007.html"];
+  dir_a36af97c98f314615873874627d7ac7d->dir_108a37fc8eb94a5f76a2daf90635ecd5 [headlabel="1", labeldistance=1.5 headhref="dir_000008_000002.html"];
+}

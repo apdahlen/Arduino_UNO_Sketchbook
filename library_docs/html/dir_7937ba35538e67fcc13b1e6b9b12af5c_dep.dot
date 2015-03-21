@@ -1,0 +1,9 @@
+digraph "sketchbook/libraries/LCD_scroll" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f230a50cb8328eed74ee6db218aa7d6 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="libraries" fontname="Helvetica", fontsize="10", URL="dir_1f230a50cb8328eed74ee6db218aa7d6.html"]
+  dir_7937ba35538e67fcc13b1e6b9b12af5c [shape=box, label="LCD_scroll", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_7937ba35538e67fcc13b1e6b9b12af5c.html"];
+  }
+}

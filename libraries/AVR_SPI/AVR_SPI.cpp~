@@ -68,7 +68,7 @@ void AVR_SPI_master_init(void){
 
 
 
-/** AVR SPI__master_xfr
+/** AVR_SPI__master_xfr
  *
  * @brief Transfer date to and from the SPI device
  *

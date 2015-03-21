@@ -1,0 +1,9 @@
+digraph "sketchbook/libraries/AVR_ADC" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f230a50cb8328eed74ee6db218aa7d6 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="libraries" fontname="Helvetica", fontsize="10", URL="dir_1f230a50cb8328eed74ee6db218aa7d6.html"]
+  dir_0dec7835227217febc1c150ef89cf1c3 [shape=box, label="AVR_ADC", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0dec7835227217febc1c150ef89cf1c3.html"];
+  }
+}

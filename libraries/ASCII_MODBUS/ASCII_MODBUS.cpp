@@ -39,7 +39,7 @@
 
     #include "ASCII_MODBUS.h"
     #include "USART.h"
-    #include "errors.h"
+    #include "error.h"
 
 
 // Public variables defined
@@ -68,18 +68,22 @@
 
 
 /**
- * @brief Initialize the MODBUS - encapsulate the USART configuration...
+ * @brief Initialize the MODBUS - encapsulate the USART configuration.
  *
  * @param dir_pin declare the pin used to control the RS-485 transceiver
  *
- * @Warning The USART_ISR must still be called from the main Arduino sketch...
+ * @param timeout set the amount of time (in milliseconds) for the slave to respond.
+ *
+ * @Warning The USART_ISR must still be called from the main Arduino sketch.
  *
  *      ISR(USART_RX_vect){
  *          USART_handle_ISR();
  *      }
  *
+ * @warning The ASCII LF is used as the terminator.  Don't forget the ASCII CR
+ *          is part of MODBUS and will be held in the buffer.
  */
-    void MODBUS_init(uint8_t dir_pin, uint8_t timeout){
+    void MODBUS_init(uint8_t dir_pin, uint16_t timeout){
         RS_485_dir_pin = dir_pin;
         digitalWrite(dir_pin, LOW);
         pinMode(dir_pin, OUTPUT);
@@ -87,7 +91,7 @@
 
         USART_init_full(16000000ul, 19200l, 0x07, 'E');
 
-        USART_set_terminator(0x0A);                                 // ASCII line feed
+        USART_set_terminator(0x0A);                                 // ASCII LF
 
     }
 
@@ -125,20 +129,20 @@
  * 
  * @param *c is the source containing the character string
  * 
- * @param length number of characters in the input string.  This parameter is
+ * @param N_char number of characters in the input string.  This parameter is
  *        required as the input string may contain the NULL char.
  *
  * @note reference the GS1 documentation for more information.
  */
 
-    void pack_ASCII_str(char *line, uint8_t *c, uint8_t length){
+    void pack_ASCII_str(char *line, uint8_t *c, uint8_t N_char){
 
-        uint8_t LRC = LRC_gen(c, length);
+        uint8_t LRC = LRC_gen(c, N_char);
 
         *line++ = ':';
 
-        byte_array_2_str(line, length, c);
-        line+= length << 1;
+        byte_array_2_str(line, N_char, c);
+        line+= N_char << 1;
         *line++ = digit[LRC >> 4];
         *line++ = digit[LRC & 0x0F];
         *line++ = 0x0D;                                             // CR
@@ -185,7 +189,7 @@
  *
  *         : 01 06 0100 1770 71 CR LF   (spaces included to separate the fields)
  *
- * @param physical_addr a byte identifying a particular MODBUS device.  Note
+ * @param slave_addr a byte identifying a particular MODBUS device.  Note
  *        this must be manually programmed into a device such as the GS1.
  *
  * @param mem_addr a 16-bit value identifying the particular MODBUS register to
@@ -200,7 +204,7 @@
  *        window.  Note that the GS1 takes approximately 2.5 mS to start reply.
  */
 
-    uint8_t MODBUS_put_word(uint8_t physical_addr, uint16_t mem_addr, uint16_t data){
+    uint8_t MODBUS_put_word(uint8_t slave_addr, uint16_t mem_addr, uint16_t data){
 
         #define match 0x00
 
@@ -210,7 +214,7 @@
         uint8_t data_h = data >> 8;
         uint8_t data_l = data & 0x00FF;
 
-        uint8_t cmd_str_hex[] = { physical_addr, MODBUS_WRITE, mem_addr_h, mem_addr_l, data_h, data_l } ;
+        uint8_t cmd_str_hex[] = { slave_addr, PRESET_SINGLE_REGISTER, mem_addr_h, mem_addr_l, data_h, data_l } ;
 
         uint16_t milisecond_cnt;
 
@@ -261,7 +265,7 @@
  *
  * @param destination a pointer to the location the returned values will be placed
  *
- * @param physical_addr a byte identifying a particular MODBUS device.  Note this
+ * @param slave_addr a byte identifying a particular MODBUS device.  Note this
  *        must be manually programmed into a device such as the GS1.
  *
  * @param starting_mem_addr a 16-bit value identifying the first address to be read
@@ -273,7 +277,7 @@
  *        Note that the GS1 takes approximately 2.5 mS to start a reply.
  */
 
-   uint8_t MODBUS_read_registers(uint16_t *destination, uint8_t physical_addr, uint16_t starting_mem_addr, uint16_t get_n_words ) {
+   uint8_t MODBUS_read_registers(uint16_t *destination, uint8_t slave_addr, uint16_t starting_mem_addr, uint16_t get_n_words ) {
 
         uint8_t starting_mem_addr_h = starting_mem_addr >> 8;
         uint8_t starting_mem_addr_l = starting_mem_addr & 0x00FF;
@@ -281,7 +285,7 @@
         uint8_t get_n_words_h = get_n_words >> 8;
         uint8_t get_n_words_l = get_n_words & 0x00FF;
 
-        uint8_t cmd_str_hex[] = { physical_addr, MODBUS_READ, starting_mem_addr_h, starting_mem_addr_l, get_n_words_h, get_n_words_l } ;
+        uint8_t cmd_str_hex[] = { slave_addr, READ_HOLDING_REGISTERS, starting_mem_addr_h, starting_mem_addr_l, get_n_words_h, get_n_words_l } ;
 
         uint16_t milisecond_cnt;
 
@@ -360,14 +364,12 @@
 * @return an unsigned integer
 */
     uint8_t ASCII_hex_2_bin(char c) {
-        //if (c = ’0’)
-        //    return 0;
-        if (c <= '9')
+
+        if (c <= '9'){
             return c - '0';
-    //   if (c < ’A’)
-    //       return 0;
-        //else if (c <= 'F')
-            return (c - 'A') + 10;
+        }
+        return (c - 'A') + 10;
+
     }
 
 
@@ -379,19 +381,19 @@
 
 
  /**
-  * @brief Determine if a valid MODBUS message has been received.  On successful
-  *        retrieval the message is held in a local MODBUS_str[] buffer.
+  * @brief Determine if a valid MODBUS message has been received.  On successful retrieval the 
+  * message is held in a local MODBUS_str[] buffer.
   *
   * @return 0 = no new message, 1 = a valid message had been retrieved
   */
-    uint8_t MODBUS_retrieve_new_msg(void){
+    uint8_t MODBUS_slave_is_new_msg(void){
 
         if (!USART_is_string())
             return 0x00;
 
         num_char =  USART_gets(MODBUS_str);
 
-        // FIXME add code to verify the LRC
+        // TODO add code to verify the LRC
 
         return 0x01;
 
@@ -400,118 +402,54 @@
 
 
 
- /**
-  * @brief Determine if the MODBUS message held in the  MODBUS_str[] buffer
-  *        is addressed to to this slave.
-  *
-  * @return 0 = address does not match, 1 = address match
-  */
-    uint8_t MODBUS_is_for_me(uint16_t my_node_addr){
-
-        uint8_t adr_1 = (ASCII_hex_2_bin(MODBUS_str[1]));
-        uint8_t adr_0 = (ASCII_hex_2_bin(MODBUS_str[2]));
-
-        uint8_t msg_addr = (adr_1 << 4) + adr_0;
-        if (msg_addr == my_node_addr)
-            return 0x01;
-        else
-            return 0x00;
-    }
 
 
+/**
+ * @brief MODBUS mode 6 is used to preset a single register.  The slave replies with an echo of the
+ * original message.
+ *
+ * @note Note the CR character is already contained in the received string since the LF was used as
+ * the terminating character.
+ *
+ * @note For debug purposes the complete MODBUS_cmd_line is available.  This function could be 
+ * improved by removing this feature.
+ */
 
+    void MODBUS_slave_echo(void){
 
- /**
-  * @brief A new MODBUS string is being evaluated.  Return the function code.
-  * Defined codes include:
-  *
-  *      3 - read registers
-  *     16 - write multiple registers
-  *      6 - write single register
-  *
-  * @return the function code contained in the MODBUS message
-  */
-    uint8_t MODBUS_get_function_code(void){
+        char term_str[] = {0x0A, 0x00};                         // end with CR (already on string) LF, NULL
 
-        uint8_t cmd_1 = (ASCII_hex_2_bin(MODBUS_str[3]));
-        uint8_t cmd_0 = (ASCII_hex_2_bin(MODBUS_str[4]));
+        strncpy(MODBUS_cmd_line, MODBUS_str, size_of_cmd_lines);    
+        strncat (MODBUS_cmd_line, term_str, size_of_cmd_lines);
 
-        return (cmd_1 << 4) + cmd_0;
-    }
-
-
-
-
-// Helper functions for "read registers mode"
-
-    uint16_t MODBUS_get_addr(void){
-
-        uint8_t addr_3 = (ASCII_hex_2_bin(MODBUS_str[5]));
-        uint8_t addr_2 = (ASCII_hex_2_bin(MODBUS_str[6]));
-        uint8_t addr_1 = (ASCII_hex_2_bin(MODBUS_str[7]));
-        uint8_t addr_0 = (ASCII_hex_2_bin(MODBUS_str[8]));
-
-        uint16_t addr;
-
-        addr = (addr_3 << 4) + addr_2;
-        addr = addr << 8;
-        addr += (addr_1 << 4) + addr_0;
-
-        return addr;
-    }
-
-
-    uint16_t MODBUS_number_of_reg_to_read(void){
-
-        uint8_t num_3 = (ASCII_hex_2_bin(MODBUS_str[9]));
-        uint8_t num_2 = (ASCII_hex_2_bin(MODBUS_str[10]));
-        uint8_t num_1 = (ASCII_hex_2_bin(MODBUS_str[11]));
-        uint8_t num_0 = (ASCII_hex_2_bin(MODBUS_str[12]));
-
-        uint16_t num;
-
-        num = (num_3 << 4) + num_2;
-        num = num << 8;
-        num += (num_1 << 4) + num_0;
-
-        return num;
-    }
-
-
-// Helper functions for write multiple registers mode
-
-    // FIXME develop these function when you have time
-
-
-
-
-
-
-// Functions for "write single register" mode
-
-
-    void MODBUS_echo(void){
-
-        // FIXME add appropriate delays here
-        USART_puts(MODBUS_str);
+        digitalWrite(RS_485_dir_pin, BUS_WRITE);
+        delayMicroseconds(1000);
+        USART_puts(MODBUS_cmd_line);
+        delayMicroseconds(1500);
+        digitalWrite(RS_485_dir_pin, BUS_READ);
 
     }
 
 
 
 
-    uint16_t MODBUS_get_reg_to_write(void){
-         return MODBUS_get_addr();
-    }
 
+/**
+ * @brief The incoming MODBUS string is held in a line buffer called MODBUS_str.  This function is
+ * used to pull a single word (16-bit value) from the buffer.  Recall that the incoming string
+ * consists of hexadecimal encoded ASCII characters.  This function combines 4 such characters.
+ *
+ * @param N is a pointer to the starting position of the desired word.
+ *
+ * @return the 16-bit value.  For example the specified data address and register data are 
+ * encoded as 16-bit values.
+ */
+    uint16_t MODBUS_get_Nth_word(uint8_t N){
 
-
-    uint16_t MODBUS_get_data_to_write(void){
-
-        uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[ 9]));
-        uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[10]));
-        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[11]));
-        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[12]));
+        uint8_t d_3 = (ASCII_hex_2_bin(MODBUS_str[N    ]));
+        uint8_t d_2 = (ASCII_hex_2_bin(MODBUS_str[N + 1]));
+        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[N + 2]));
+        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[N + 3]));
 
         uint16_t d;
 
@@ -521,4 +459,96 @@
 
         return d;
 
+    }
+
+
+/**
+ * @brief The incoming MODBUS string is held in a line buffer called MODBUS_str.  This function is
+ * used to pull a single integer (8-bit value) from the buffer.  Recall that the incoming string
+ * consists of hexadecimal encoded ASCII characters.  This function combines 2 such characters.
+ *
+ * @param N is a pointer to the starting position of the desired integer.
+ *
+ * @return the 8-bit value.  For example, the second field in a MODBUS string is a 8-bit 
+ * slave address.
+ */
+    uint8_t MODBUS_get_Nth_int(uint8_t N){
+
+        uint8_t d_1 = (ASCII_hex_2_bin(MODBUS_str[N    ]));
+        uint8_t d_0 = (ASCII_hex_2_bin(MODBUS_str[N + 1]));
+
+        return (d_1 << 4) + d_0;
+
+    }
+
+
+
+#define N_REGS 50
+
+uint16_t regs[N_REGS];
+
+
+/**
+ * @brief This function is involved is assembling an outgoing MODBUS frame.  When this function is
+ * called the values to be sent have already been collected into the buffer regs.  This function
+ * prepends the slave address, MODBUS function code, and number of bytes to be sent.  It them calls
+ * the pack_ASCII_str function which completes the frame assembly by prepending the ':' symbol
+ * and appending the LRC and CR/LF pair.
+ *
+ * @param N number of words (16-bit) to be included in the frame
+ *
+ * @param slave_addr The address of the sending slave
+ */
+
+    void MODBUS_put_N_words(uint8_t N, uint8_t slave_addr){
+
+        uint8_t cmd_str_hex[] = { slave_addr, READ_HOLDING_REGISTERS, N} ;
+
+        uint8_t i;
+
+        for(i = 0; i < N; i++){                             // take 16-bit words stored in regs and split into 8-bit
+
+            cmd_str_hex[(i * 2) + 3] = regs[i] >> 8;
+            cmd_str_hex[(i * 2) + 4] = regs[i] & 0x00FF;
+
+        }
+
+        pack_ASCII_str(MODBUS_cmd_line, cmd_str_hex, 3 + (N * 2));
+
+    // Write the word
+
+        digitalWrite(RS_485_dir_pin, BUS_WRITE);
+        delayMicroseconds(1700);
+        USART_puts(MODBUS_cmd_line);
+        delayMicroseconds(1500);
+        digitalWrite(RS_485_dir_pin, BUS_READ);
+    }
+
+
+/**
+ * @brief An outgoing MODBUS frame is built in a temporary buffer called regs.  This setter function
+ * is used to place a new 16-bit value in the desired position.
+ *
+ * @param index specified where the data is to be placed
+ *
+ * @param D contains the data
+ *
+ * @note This function is designed to be called from within a loop for example:
+ *
+ * @code
+ *        case 0x0001:
+ *
+ *           for(i = 0; i < n; i++){
+ *               MODBUS_buffer_words(i, i + 1);
+ *           }
+ *           MODBUS_put_N_words(n, MY_ADDR);
+ *
+ *           break;
+ *
+ *  @endcode
+ */
+
+    void MODBUS_buffer_words(uint16_t index, uint16_t D){
+
+        regs[index] = D;
     }

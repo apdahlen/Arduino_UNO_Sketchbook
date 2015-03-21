@@ -1,0 +1,9 @@
+digraph "sketchbook/libraries/error" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_1f230a50cb8328eed74ee6db218aa7d6 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="libraries" fontname="Helvetica", fontsize="10", URL="dir_1f230a50cb8328eed74ee6db218aa7d6.html"]
+  dir_1014db5a2b18bf62e46e9a541f0da85c [shape=box, label="error", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_1014db5a2b18bf62e46e9a541f0da85c.html"];
+  }
+}
