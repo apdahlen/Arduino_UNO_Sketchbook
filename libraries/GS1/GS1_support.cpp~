@@ -25,10 +25,10 @@
  * responding to MODBUS commands.
  *
  */
-    uint8_t GS1_init(uint8_t slave_address, uint8_t dir_pin, uint8_t timeout){
+    uint8_t GS1_init(uint8_t slave_addr, uint8_t dir_pin, uint8_t timeout){
 
         MODBUS_init(dir_pin, timeout);
-        return MODBUS_put_word(slave_address, Serial_Comm_RUN_Command, 0x0000);
+        return MODBUS_put_word(slave_addr, Serial_Comm_RUN_Command, 0x0000);
 
     }
 
@@ -66,7 +66,7 @@
  * @return result of operation, 1 = success, 0 = failure
  *
  */
-    uint8_t GS1_turn_on(uint8_t physical_addr){
+    uint8_t GS1_turn_on(uint8_t slave_addr){
 
         return MODBUS_put_word(slave_addr, Serial_Comm_RUN_Command, 0x0001);
 
@@ -86,6 +86,6 @@
  */
     uint8_t GS1_turn_off(uint8_t slave_addr){
 
-        return MODBUS_put_word(physical_addr, Serial_Comm_RUN_Command, 0x0000);
+        return MODBUS_put_word(slave_addr, Serial_Comm_RUN_Command, 0x0000);
 
     }

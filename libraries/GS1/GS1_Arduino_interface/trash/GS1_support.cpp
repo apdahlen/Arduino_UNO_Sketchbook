@@ -1,0 +1,273 @@
+    #include <avr/io.h>
+    #include <avr/interrupt.h>
+    #include <stdint.h>
+    #include <string.h>
+    #include <ctype.h>
+    #include <Arduino.h>
+
+    #include "GS1_support.h"
+    #include "configuration.h"
+    #include "GS1_USART.h"
+
+
+// Private functions
+
+    char digit[ ] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+
+    void byte_array_2_str(char *line, uint8_t length, uint8_t *hex_array);
+    uint16_t LRC_gen(uint8_t *data, uint8_t length);
+    void pack_ASCII_str(char *line, uint8_t *c, uint8_t length);
+    void GS1_put_word(uint8_t GS1_physical_addr, uint16_t mem_addr, uint16_t data);
+    
+    // FIXME MODBUS for all
+
+    // FIXME MODBUS_get_line(char line, uint8 timeut);
+
+    // FIXME MODBUS_put_line(uint8_t physical_addr, uint16_t mem_addr, uint16_t data);
+
+
+
+
+
+
+
+
+    //FIXME allow RTU mode in the future... uint16_t GS1_CRC_gen(uint8_t *data, uint8_t length);
+
+
+// Private alias
+
+    //   #define WRITE 0x01
+    //   #define READ 0x00
+
+
+
+
+
+
+/**
+ * @brief This function performs the Longitudinal Redundancy Check  (LRC).  This
+ *        is used while the GS1 is in "ASCII mode".  To quote wiki:
+ *
+ *            "the 8-bit two's-complement value of the sum of all bytes modulo 2^8"
+ */
+uint16_t LRC_gen(uint8_t *data, uint8_t length){
+
+    uint8_t LRC = 0;
+
+    while(length--){
+        LRC += *data++;                                     // modulo 256 addition
+    }
+    return 0 - LRC;                                         // 2's complement
+}
+
+
+/**
+ * @brief Construct an ASCII mode string by preppending the ':' symbol, converting
+ *        the bytes to ASCII Hex, and appending the LRC, CR plus LF.
+ */
+void pack_ASCII_str(char *line, uint8_t *c, uint8_t length){
+
+   uint8_t LRC = LRC_gen(c, length);
+
+   *line++ = ':';
+
+   byte_array_2_str(line, length, c);
+   line+= length << 1;
+   *line++ = digit[LRC >> 4];
+   *line++ = digit[LRC & 0x0F];
+   *line++ = 0x0D;                              // CR
+   *line++ = 0x0A;                              // LF
+   *line++ = 0x00;
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ * @brief
+ */
+void byte_array_2_str(char *line, uint8_t length, uint8_t *hex_array){
+
+    while(length--){
+        *line = digit[*hex_array >> 4];
+        line++;
+        *line = digit[*hex_array & 0x0F];
+        line++;
+        hex_array++;
+    }
+    *line = 0x00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @brief This function is used to write a single word to the GS1 drive.
+ *
+ * @param GS1_Physical_addr a byte identifying a particular GS1 device.  Note this
+ *        must be manually programmed into the GS1.
+ *
+ * @param mem_addr a 16-bit value identifying the particular GS1 register to be written
+ *
+ * @param data a 16-bit value containing the data to be written to mem_addr
+ *
+ * @note  There is a glitch as the RS-485 transceiver transitions from XMT to RCV.
+ *        This delay moves the transition outside of the GS1's observation window.
+ *        Note that the GS1 takes approximately 2.5 mS to start a reply.
+ */
+void GS1_put_word(uint8_t GS1_physical_addr, uint16_t mem_addr, uint16_t data) {
+
+    #define WRITE 0x01
+    #define READ 0x00
+
+    uint8_t mem_addr_h = mem_addr >> 8;
+    uint8_t mem_addr_l = mem_addr & 0x00FF;
+
+    uint8_t data_h = data >> 8;
+    uint8_t data_l = data & 0x00FF;
+
+    char line[20];
+
+    uint8_t cmd_str_hex[] = { GS1_physical_addr, GS1_WRITE, mem_addr_h, mem_addr_l, data_h, data_l } ;
+
+    pack_ASCII_str(line, cmd_str_hex, 6);
+
+    digitalWrite(RS_485_DIR_PIN, WRITE);
+    delayMicroseconds(1000); 
+    USART_puts(line);
+    delayMicroseconds(1500);
+    digitalWrite(RS_485_DIR_PIN, READ);
+}
+
+
+
+
+/**
+ * @brief Simplified function used to set the rotational speed of the GS1 drive.
+ *
+ * @param GS1_Physical_addr a byte identifying a particular GS1 device.  Note this
+ *        must be manually programmed into the GS1.
+ *
+ * @param deci_freq is a 16-bit value used to set the actual motor speed.  For
+ *        example, if a 40 Hz operation is desired then set deci_freq = 400.
+ *
+ * @return FIXME we should verify the GS1 actually performed the operation
+ */
+ void GS1_set_speed(uint8_t GS1_physical_addr, uint16_t deci_freq){
+
+    GS1_put_word(GS1_physical_addr, 0x091A, deci_freq);
+
+}
+
+
+
+/**
+ * @brief Simplified function to activate a particular GS1 motor drive.
+ *
+ * @param GS1_Physical_addr a byte identifying a particular GS1 device.  Note this
+ *        must be manually programmed into the GS1.
+ */
+void GS1_turn_on(uint8_t GS1_physical_addr){ 
+
+    //  uint8_t run_str_hex[] = { GS1_dev_adr, GS1_write, 0x09, 0x1B, 0x00, 0x01} ;     // Works!
+
+ //   GS1_put_word(GS1_physical_addr, 0x091A, 0x0000);  //FIXME verify this line operates as expected
+
+    GS1_put_word (GS1_physical_addr, 0x091B, 0x0001);
+
+}
+
+
+
+/**
+ * @brief Simplified function to secure a particular GS1 motor drive.
+ *
+ * @param GS1_Physical_addr a byte identifying a particular GS1 device.  Note this
+ *        must be manually programmed into the GS1.
+ */
+void GS1_turn_off(uint8_t GS1_physical_addr){ 
+
+   // GS1_put_word(GS1_physical_addr, 0x091A, 0x0000);              //FIXME verify this line operates as expected
+
+    GS1_put_word (GS1_physical_addr, 0x091B, 0x0000);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// These functions are broken but may be useful in the future.
+
+// FIXME when I have time...
+
+
+
+
+
+
+void GS1_append_CRC(uint8_t *data){
+
+ //   uint8_t length = strlen(data);
+
+}
+
+
+
+
+/**
+ * @brief CRC function adapted from the GS1 user manual.
+*/
+uint16_t GS1_CRC_gen(uint8_t *data, uint8_t length){
+
+    uint8_t j;
+    uint16_t reg_crc = 0xFFFF;
+
+    while(length--){
+
+        reg_crc ^= *data++;
+
+        for(j = 0; j < 8; j++){
+            if(reg_crc & 0x01){                         // LSB(b0) = 1
+                reg_crc=(reg_crc>>1) ^ 0xA001;
+            }
+            else{
+                reg_crc=reg_crc >>1;
+            }
+        }
+    }
+    return reg_crc;
+}
