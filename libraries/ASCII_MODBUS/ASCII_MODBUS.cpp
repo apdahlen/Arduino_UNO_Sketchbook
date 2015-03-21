@@ -348,7 +348,7 @@
  ******************************************************************************/
 
 
-    static char MODBUS_str[MODBUS_STR_LENGTH];
+    static char MODBUS_str[size_of_cmd_lines];
     static uint8_t num_char;
 
 
