@@ -37,8 +37,10 @@
     #include "configuration.h"
   // #include "GS1_USART.h"
    // #include "line_parser.h"
+    #include "ASCII_MODBUS.h"
     #include "GS1_support.h"
     #include "USART.h"
+#include "error.h"
 
 
 // Global variables
@@ -120,7 +122,7 @@ void loop(){
 
         for(uint16_t i = 50; i < 600; i++){
             GS1_set_speed(GS1_ADDR, i);
-            delay(50);
+            delay(5);
         }
 
         delay(4000);

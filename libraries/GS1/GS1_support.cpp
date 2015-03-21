@@ -6,8 +6,9 @@
     #include <ctype.h>
     #include <Arduino.h>
 
-    #include "GS1_support.h"
     #include "ASCII_MODBUS.h"
+    #include "GS1_support.h"
+
 
 /**
  * @brief Initialize the GS1 by configuring the MODBUS connection and by
