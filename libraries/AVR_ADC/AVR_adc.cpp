@@ -29,8 +29,8 @@
  */
 void ADC_init(){
 
-    ADMUX |= (1 << REFS0);                              // VCC as voltage reference
- // ADMUX |= (1 << REFS1) | (1 << REFS0);               // Internal 1.1 V as voltage reference
+  //  ADMUX |= (1 << REFS0);                              // VCC as voltage reference
+    ADMUX |= (1 << REFS1) | (1 << REFS0);               // Internal 1.1 V as voltage reference
 
     ADCSRA &= 0xF8;                                     // FIXME what about this line make the prescaler work?
 
