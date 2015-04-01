@@ -7,8 +7,8 @@
 
 /* Set the size of the circular buffer */
 
-    #define circ_buf_len 128                // must be a power of 2 (PO2)
-    #define modulo_mask 0b01111111          // must be the binary representation of circ_buf_len - 1
+    #define circ_buf_len 128                                        // must be a power of 2 (PO2)
+    #define modulo_mask 0b01111111                                  // must be the binary representation of circ_buf_len - 1
 
 
 // Private variables
@@ -17,7 +17,7 @@
     static volatile uint8_t circ_buf_head = 0;
     static volatile uint8_t circ_buf_tail = 0;
 
-    static volatile char line_terminator = 0x0A;    // default is ASCII Line Feed
+    static volatile char line_terminator = 0x0A;                    // default is ASCII Line Feed
 
  /** USART_handle_ISR
  * @brief This Interrupt Service Routine is called when a new character is received by the USART.
@@ -25,7 +25,7 @@
  * then retrieves data from this buffer.  Observe that this mechanism allows data to be received at
  * a high rate of speed independent of the main loop.
  *
- * @todo Ideally the entire ISR would be located in this file.  Unfortunately there is a error
+ * @CAUTION Ideally the entire ISR would be located in this file.  Unfortunately there is a error
  * "multiple definition of `vector_18".  Apparently Arduino detects when an ISR is in the main
  * sketch.  If you place it somewhere else it is missed and replaced with the Arduino handler.
  * This is the source of the multiple definitions error.  See discussion at:
@@ -66,11 +66,11 @@ void USART_handle_ISR(void){
  *      UBBR = --------------  - 1
  *               16 * BAUD
  *
- * @param f_clk - master clock frequency,  usually 16000000 for the Arduino
+ * @param f_clk master clock frequency, usually 16000000 MHz for the Arduino
  *
  * @param baud_rate desired speed of the USART e.g., 19200L
  *
- * @param data_bits currently accepts either 7 or 8
+ * @param data_bits currently accepts either 7 or 8 bits
  *
  * @param parity 'N' = None, 'E' = Even, and 'O' = Odd
  *
@@ -84,7 +84,7 @@ void USART_init_full(unsigned long f_clk, unsigned long baud_rate, uint8_t data_
     UBRR0H = (uint8_t)(desired_UBRR >> 8);                          // Set the baud rate generator
     UBRR0L = (uint8_t)desired_UBRR;
     UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);           // Enable the USART hardware as well as the interrupt flag 
-    
+
     UCSR0C = 0;
     if (data_bits == 8)
        UCSR0C = (0 << UCSZ02) | (1 << UCSZ01) | (1 << UCSZ00);
@@ -191,11 +191,11 @@ void USART_puts(char *D){
 
 
 
-void USART_puts_ROM(const char *D){
+void USART_puts_ROM(const char *D){                                 // TODO change to void USART_puts(const char *D);
 
     do {
-        UDR0 = *D;                                                  // send a byte
-        while ( !( UCSR0A & (1 << UDRE0)) );                        // wait before sending the next byte
+        UDR0 = *D;
+        while ( !( UCSR0A & (1 << UDRE0)) );
         D++;
     }
     while(*D != 0x00);
@@ -204,7 +204,7 @@ void USART_puts_ROM(const char *D){
 
 
 /*
-void USART_nb_puts_RAM(char *D){                                    // FIXME is a non blocking USART interface needed?
+void USART_nb_puts_RAM(char *D){                                    // TODO a non-blocking routine would be a nice addition
 
     static uint_8 lockout;
 

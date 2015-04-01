@@ -5,6 +5,7 @@
 
     #include "USART.h"
 
+
 /* Set the size of the circular buffer */
 
     #define circ_buf_len 128                                        // must be a power of 2 (PO2)
@@ -18,6 +19,7 @@
     static volatile uint8_t circ_buf_tail = 0;
 
     static volatile char line_terminator = 0x0A;                    // default is ASCII Line Feed
+
 
  /** USART_handle_ISR
  * @brief This Interrupt Service Routine is called when a new character is received by the USART.

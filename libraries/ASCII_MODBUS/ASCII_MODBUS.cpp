@@ -88,9 +88,7 @@
         digitalWrite(dir_pin, LOW);
         pinMode(dir_pin, OUTPUT);
         USART_timeout_millieseconds = timeout;
-
         USART_init_full(16000000ul, 19200l, 0x07, 'E');
-
         USART_set_terminator(0x0A);                                 // ASCII LF
 
     }
@@ -502,7 +500,7 @@ uint16_t regs[N_REGS];
 
     void MODBUS_put_N_words(uint8_t N, uint8_t slave_addr){
 
-        uint8_t cmd_str_hex[] = { slave_addr, READ_HOLDING_REGISTERS, N} ;
+        uint8_t cmd_str_hex[40] = { slave_addr, READ_HOLDING_REGISTERS, N} ;            //FIXME Test tomorrow - this may have been the error
 
         uint8_t i;
 
