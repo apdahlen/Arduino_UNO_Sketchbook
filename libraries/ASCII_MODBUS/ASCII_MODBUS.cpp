@@ -305,7 +305,7 @@
         while(!USART_is_string( )){
             delay(1);
             if (++milisecond_cnt == USART_TIMEOUT_MILLISECONDS){         // prevent lockup if device is not connected
-                strncpy(ERROR_MSG, "MODBUS_read_registers: USART timeout", SIZE_ERROR_MSG);
+                strncpy(ERROR_MSG, "MODBUS_read_reg: USART timeout", SIZE_ERROR_MSG);
                 return 0x00;
             }
         }
@@ -315,7 +315,7 @@
     // Verify first 5 ASCII characters of response are correct
 
         if(strncmp(MODBUS_cmd_line, MODBUS_reply_line, 5) != match){   // limit to the first 15 characters (no need to test the line terminators)
-            strncpy(ERROR_MSG, "MODBUS_read_registers: first 5 characters don't match", SIZE_ERROR_MSG);
+            strncpy(ERROR_MSG, "MODBUS_read_reg: first 5 characters don't match", SIZE_ERROR_MSG);
             return 0x00;
         }
 
@@ -324,7 +324,7 @@
         uint16_t num_words_received = (MODBUS_reply_line[5] << 8) + MODBUS_reply_line[6];
 
         if (num_words_received != get_n_words){
-            strncpy(ERROR_MSG, "MODBUS_read_registers: improper number words returned", SIZE_ERROR_MSG);
+            strncpy(ERROR_MSG, "MODBUS_read_reg: improper number words returned", SIZE_ERROR_MSG);
             return 0x00;
         }
 
