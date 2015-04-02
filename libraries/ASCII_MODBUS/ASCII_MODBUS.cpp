@@ -53,6 +53,7 @@
     void byte_array_2_str(char *line, uint8_t length, uint8_t *hex_array);
     uint16_t LRC_gen(uint8_t *data, uint8_t length);
     void pack_ASCII_str(char *line, uint8_t *c, uint8_t length);
+    uint8_t ASCII_hex_2_bin(char c);
 
 
 // Private alias
@@ -319,9 +320,9 @@
 
     // Verify the number bytes received equals number of bytes requested
 
-        uint16_t num_words_received = (MODBUS_reply_line[5] << 8) + MODBUS_reply_line[6];
+        uint16_t num_bytes_received = (ASCII_hex_2_bin(MODBUS_reply_line[5]) << 8) + ASCII_hex_2_bin(MODBUS_reply_line[6]);
 
-        if (num_words_received != get_n_words){
+        if (num_bytes_received !=  (get_n_words << 1)){
             strncpy(ERROR_MSG, "MODBUS_read_reg: improper number words returned", SIZE_ERROR_MSG);
             return 0x00;
         }
@@ -330,7 +331,7 @@
 
         for (uint16_t i = 0; i < get_n_words * 2; i = i + 2){
 
-            *destination = (MODBUS_reply_line[i + 7] << 8) + MODBUS_reply_line[i + 8];
+            *destination = (ASCII_hex_2_bin(MODBUS_reply_line[i + 7]) << 8) + ASCII_hex_2_bin(MODBUS_reply_line[i + 8]);
             destination++;
         }
         return 0x01;
@@ -493,14 +494,16 @@ uint16_t regs[N_REGS];
  * the pack_ASCII_str function which completes the frame assembly by prepending the ':' symbol
  * and appending the LRC and CR/LF pair.
  *
- * @param N number of words (16-bit) to be included in the frame
+ * @param N number of words (16-bit) to be included in the frame.  
  *
  * @param slave_addr The address of the sending slave
+ *
+ * @Caution In the response message number of data is specified in bytes.
  */
 
     void MODBUS_put_N_words(uint8_t N, uint8_t slave_addr){
 
-        uint8_t cmd_str_hex[40] = { slave_addr, READ_HOLDING_REGISTERS, N} ;            //FIXME Test tomorrow - this may have been the error
+        uint8_t cmd_str_hex[40] = { slave_addr, READ_HOLDING_REGISTERS, N * 2 } ;            //FIXME Test tomorrow - this may have been the error
 
         uint8_t i;
 
