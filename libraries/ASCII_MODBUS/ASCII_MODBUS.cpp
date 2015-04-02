@@ -329,9 +329,16 @@
 
     // Put the received words into the destination buffer
 
-        for (uint16_t i = 0; i < get_n_words * 2; i = i + 2){
+        uint16_t temp;
 
-            *destination = (ASCII_hex_2_bin(MODBUS_reply_line[i + 7]) << 8) + ASCII_hex_2_bin(MODBUS_reply_line[i + 8]);
+        for (uint16_t i = 0; i < get_n_words * 4; i = i + 4){
+
+            temp =  ASCII_hex_2_bin(MODBUS_reply_line[i + 7]) << 12;
+            temp += ASCII_hex_2_bin(MODBUS_reply_line[i + 8]) << 8;
+            temp += ASCII_hex_2_bin(MODBUS_reply_line[i + 9]) << 4;
+            temp += ASCII_hex_2_bin(MODBUS_reply_line[i + 10]);
+
+            *destination = temp;
             destination++;
         }
         return 0x01;
