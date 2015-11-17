@@ -21,7 +21,7 @@
  *          sprintf(line, "%s", "$GPGGA,123519,4807.038,N,01131.000,E,1,08,0.9,545.4,M,46.9,M,,*47");
  *          num_fields =  line_parser(line, ',');
  *          printf("\nThe string \"%s\" contains %d fields.  The individual fields are: \n", line, num_fields);
- *          for (i = 1; i < num_fields; i++){
+ *          for (i = 1; i <= num_fields; i++){
  *              num_char_in_field = get_field(line, i);
  *              printf("\tfield %d with length %d = %s\n",i, num_char_in_field, line );
  *          }
