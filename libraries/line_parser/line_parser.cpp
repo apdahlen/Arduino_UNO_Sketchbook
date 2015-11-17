@@ -22,7 +22,7 @@
  *          num_fields =  line_parser(line, ',');
  *          printf("\nThe string \"%s\" contains %d fields.  The individual fields are: \n", line, num_fields);
  *          for (i = 1; i < num_fields; i++){
- *              num_char_in_field = get_field(i, line);
+ *              num_char_in_field = get_field(line, i);
  *              printf("\tfield %d with length %d = %s\n",i, num_char_in_field, line );
  *          }
  *    @endcode
