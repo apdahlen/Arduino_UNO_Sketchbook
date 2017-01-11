@@ -6,8 +6,8 @@
  *
  * @date 18 Feb 2015
  *
- * @brief Observe that the Arduino SPI library "allows you to communicate with
- * SPI devices, with the Arduino as the master device."  The code contained in
+ * @brief Observe that the Arduino community SPI library "allows you to communicate
+ * with SPI devices, with the Arduino as the master device."  The code contained in
  * this library allows you to use the Arduino as a slave or as a master.
  *
  * @TODO add examples showing how to use the Arduino as a slave and as a master
@@ -86,7 +86,7 @@ void AVR_SPI_master_init(void){
 
 /** AVR_SPI__master_xfr
  *
- * @brief Transfer date to and from the SPI device
+ * @brief Transfer data to and from the SPI device
  *
  * @param N number of bytes to be transfered
  *
