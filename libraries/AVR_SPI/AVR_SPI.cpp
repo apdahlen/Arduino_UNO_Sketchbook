@@ -73,18 +73,21 @@
  *      12      MISO
  *      13      SCK
  */
-void AVR_SPI_master_init(void){
+void AVR_SPI_master_init(void){			// FIXME add code to select clock rate
 
     /* Set MOSI and SCK output, all others input */
         DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_CS_not);
         CS_idle;
     /* Enable SPI, Master, set clock rate fck/128 */
-        SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
+  //      SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
+
+    /* Enable SPI, Master, set clock rate fck/16 */
+        SPCR = (1 << SPE) | (1 << MSTR) | (0 << SPI2X) |(0 << SPR1) | (1 << SPR0);
 }
 
 
 
-/** AVR_SPI__master_xfr
+/** AVR_SPI_master_xfr
  *
  * @brief Transfer data to and from the SPI device
  *
