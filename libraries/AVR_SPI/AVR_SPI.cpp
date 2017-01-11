@@ -79,7 +79,7 @@ void AVR_SPI_master_init(void){			// FIXME add code to select clock rate
         DDR_SPI |= (1 << DD_MOSI) | (1 << DD_SCK) | (1 << DD_CS_not);
         CS_idle;
     /* Enable SPI, Master, set clock rate fck/128 */
-  //      SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
+    //    SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
 
     /* Enable SPI, Master, set clock rate fck/16 */
         SPCR = (1 << SPE) | (1 << MSTR) | (0 << SPI2X) |(0 << SPR1) | (1 << SPR0);
